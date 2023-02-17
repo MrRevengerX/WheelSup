@@ -9,62 +9,90 @@ mp_drawing_styles = mp.solutions.drawing_styles
 
 # Function to detect key points using mediapipe
 def mediapipe_detection(image, model):
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) # COLOR CONVERSION BGR 2 RGB
-    image.flags.writeable = False                  # Image is no longer writeable
-    results = model.process(image)                 # Make prediction
-    image.flags.writeable = True                   # Image is now writeable
-    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR) # COLOR COVERSION RGB 2 BGR
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    image.flags.writeable = False
+    results = model.process(image)
+    image.flags.writeable = True
+    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
     return image, results
 
 
 # Function to draw landmarks of detected keypoints for visualization
-def draw_styled_landmarks(image, results):
-    # Face keypoints
-    mp_drawing.draw_landmarks(image, results.face_landmarks, mp_holistic.FACEMESH_TESSELATION,
-                             mp_drawing.DrawingSpec(color=(80,110,10), thickness=1, circle_radius=1),
-                             mp_drawing.DrawingSpec(color=(80,256,121), thickness=1, circle_radius=1)
-                             )
+def landmark_styling(image, results):
     # Pose keypoints
     mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_holistic.POSE_CONNECTIONS,
                              landmark_drawing_spec=mp_drawing_styles.get_default_pose_landmarks_style()
                              )
-    # Left hand keypoints
-    mp_drawing.draw_landmarks(image, results.left_hand_landmarks, mp_holistic.HAND_CONNECTIONS,
-                             mp_drawing.DrawingSpec(color=(121,22,76), thickness=2, circle_radius=4),
-                             mp_drawing.DrawingSpec(color=(121,44,250), thickness=2, circle_radius=2)
-                             )
-    # Right hand keypoints
-    mp_drawing.draw_landmarks(image, results.right_hand_landmarks, mp_holistic.HAND_CONNECTIONS,
-                             mp_drawing.DrawingSpec(color=(245,117,66), thickness=2, circle_radius=4),
-                             mp_drawing.DrawingSpec(color=(245,66,230), thickness=2, circle_radius=2)
-                             )
 
+def scale_video(scale_percent):
+    width = int(image.shape[1] * scale_percent / 100)
+    height = int(image.shape[0] * scale_percent / 100)
+    dimensions = (width, height)
+    return dimensions
 
 def process_video(video):
+
     # Capturing Video
     cap = cv2.VideoCapture(video)
 
+    # Getting video properties for output video
     frame_width = int(cap.get(3))
     frame_height = int(cap.get(4))
-    frame_size = (frame_width,frame_height)
     fps = int(cap.get(5))
-    output = cv2.VideoWriter('assets/landmarkedVid.mp4', cv2.VideoWriter_fourcc(*'XVID'), fps, frame_size)
 
+    frame_size = (frame_width,frame_height)#creating a tuple with video dimensions
+    output = cv2.VideoWriter('assets/landmarkedVid.mp4', cv2.VideoWriter_fourcc(*'XVID'), fps, frame_size)#creating a video writer object with the same dimensions as the input video
+
+    # Setting mediapipe model
     with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
         while cap.isOpened():
 
             ret, frame = cap.read()
+            #Break the loop if there are no frames.
             if not ret:
                 break
 
-            image, results = mediapipe_detection(frame, holistic)
-            draw_styled_landmarks(image, results)
+            image, results = mediapipe_detection(frame, holistic)#detecting keypoints
+            landmark_styling(image, results)#drawing keypoints
 
+            #Writing annotated image to output video
             output.write(image)
 
+        #closing video capture and video writer objects
         cap.release()
         output.release()
         cv2.destroyAllWindows()
+
+
+cap = cv2.VideoCapture(r'assets/userSubmission.mp4')
+# Set mediapipe model
+with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
+    while cap.isOpened():
+
+        # Read feed
+        ret, frame = cap.read()
+
+        # Make detections
+        image, results = mediapipe_detection(frame, holistic)
+        #print(results)
+
+        # Draw landmarks
+        landmark_styling(image, results)
+
+
+        dim = scale_video(30)
+        # Show to screen
+
+        image = cv2.resize(image, dim, interpolation = cv2.INTER_AREA)
+
+
+        cv2.imshow('OpenCV Feed', image)
+
+        # Break gracefully
+        if cv2.waitKey(10) & 0xFF == ord('q'):
+            break
+    cap.release()
+    cv2.destroyAllWindows()
 
 
 
