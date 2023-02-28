@@ -48,11 +48,13 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
 
 
-              const SizedBox(height:20),
+
+              const SizedBox(height:0),
               const Text(
-                'Choose Exercise', textAlign: TextAlign.left,
+                'Choose Exercise',
+                textAlign: TextAlign.left,
                 style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 20,
                     color: Colors.black,
                     fontWeight: FontWeight.w600,
                     fontFamily: "Poppins"),
@@ -60,21 +62,41 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
               const SizedBox(height: 10),
-              Image.asset(
-                "assets/images/dumbbellpress.png",
-                height: 95,
-                width: 70,
+              // Image.asset(
+              //   "assets/images/DumbbellShoulderPress.jpg",
+              //   height: 176,
+              //   width: 310,
+              // ),
+              //
+              //
+              // const SizedBox(height: 30),
+              // Image.asset(
+              //   "assets/images/chair.png",
+              //   height: 176,
+              //   width: 310,
+              // ),
+
+              InkWell(
+                onTap: () {}, // needed
+                child: Image.asset(
+                  "assets/images/chair.png",
+                  height: 150,
+                  fit: BoxFit.cover,
+                ),
               ),
 
-
-              const SizedBox(height: 20),
-              Image.asset(
-                "assets/images/dumbbellpress.png",
-                height: 95,
-                width: 70,
+              const SizedBox(height: 30),
+              InkWell(
+                onTap: () {}, // needed
+                child: Image.asset(
+                  "assets/images/chair.png",
+                  height: 150,
+                  fit: BoxFit.cover,
+                  color: Colors.transparent,
+                ),
               ),
 
-
+              const SizedBox(height: 50),
               const Text(
                 'Welcome To',
                 style: TextStyle(
@@ -93,9 +115,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     fontFamily: "Poppins"),
               ),
               const Text(
-                '''
-                Choose any exercise you like,
-                WheelSup Will Guide You!''',
+                'Choose any exercise you like,',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontFamily: "Poppins",
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const Text(
+                'WheelSup Will Guide You!',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.black,
@@ -104,6 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 textAlign: TextAlign.center,
               ),
 
+              const SizedBox(height: 50),
               const Text(
                 'Navigation Bar Comes Here',
                 style: TextStyle(
@@ -114,66 +144,12 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
 
               const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ButtonBar(
-                      alignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 280.0,
-                          height: 55.0,
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color.fromRGBO(219, 248, 255, 1.0),
-                              foregroundColor: Colors.black,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                            ),
-                            child: const Text(
-                              "GET STARTED",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "Poppins",
-                                fontSize: 16,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                          ),
-                        ),
-                      ]
-                  ),
-                ],
-              )
+
             ],
           ),
         ),
-        floatingActionButton: Container(
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: Colors.white,
-                width: 8.0,
-              )
-          ),
 
-          height: 90.0,
-          width: 90.0,
-          margin: const EdgeInsets.only(
-            bottom: 50.0,
-            right: 20.0,
-          ),
-          child: FloatingActionButton(
-            onPressed: () {},
-            backgroundColor: HexColor('#0085D0'),
-            child: const Icon(
-              Icons.navigate_next,
-              size: 70,
-              color: Colors.white,
-            ),
-          ),
-        ));
+
+    );
   }
 }
