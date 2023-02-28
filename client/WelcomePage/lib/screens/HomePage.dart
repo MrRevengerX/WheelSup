@@ -104,6 +104,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 textAlign: TextAlign.center,
               ),
 
+              const Text(
+                'Navigation Bar Comes Here',
+                style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: "Poppins"),
+              ),
 
               const SizedBox(height: 20),
               Row(
