@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class MyWelcomePage extends StatefulWidget {
+class MyHomePage extends StatefulWidget {
   @override
-  _MyWelcomePageState createState() => _MyWelcomePageState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyWelcomePageState extends State<MyWelcomePage> {
+class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,17 +46,44 @@ class _MyWelcomePageState extends State<MyWelcomePage> {
                   ),
                 ],
               ),
-              const SizedBox(height:0),
-              Image.asset(
-                "assets/images/chair.png",
-                height: 400,
+
+
+              const SizedBox(height:20),
+              const Text(
+                'Choose Exercise', textAlign: TextAlign.left,
+                style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: "Poppins"),
               ),
+
+
               const SizedBox(height: 10),
+              Image.asset(
+                "assets/images/dumbbellpress.png",
+                height: 95,
+                width: 70,
+              ),
+
+
+              const SizedBox(height: 20),
+              Image.asset(
+                "assets/images/dumbbellpress.png",
+                height: 95,
+                width: 70,
+              ),
+
+
               const Text(
                 'Welcome To',
                 style: TextStyle(
-                    fontSize: 16, color: Colors.black, fontFamily: "Poppins"),
+                    fontSize: 18,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: "Poppins"),
               ),
+
               const Text(
                 'WHEELSUP FITNESS APP',
                 style: TextStyle(
@@ -66,7 +93,9 @@ class _MyWelcomePageState extends State<MyWelcomePage> {
                     fontFamily: "Poppins"),
               ),
               const Text(
-                'Plan and start your daily workout &                       grow your fitness.',
+                '''
+                Choose any exercise you like,
+                WheelSup Will Guide You!''',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.black,
@@ -74,6 +103,8 @@ class _MyWelcomePageState extends State<MyWelcomePage> {
                 ),
                 textAlign: TextAlign.center,
               ),
+
+
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -113,11 +144,11 @@ class _MyWelcomePageState extends State<MyWelcomePage> {
         ),
         floatingActionButton: Container(
           decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: Colors.white,
-              width: 8.0,
-            )
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: Colors.white,
+                width: 8.0,
+              )
           ),
 
           height: 90.0,
