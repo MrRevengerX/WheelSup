@@ -4,7 +4,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:janudha/screens/HomePage.dart';
 
-import 'screens/WelcomePage.dart';
+import 'screens/HomePage.dart';
 
 void main() => runApp(
   DevicePreview(
