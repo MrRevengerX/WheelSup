@@ -66,7 +66,16 @@ class _MyWelcomePageState extends State<MyWelcomePage> {
                     fontFamily: "Poppins"),
               ),
               const Text(
-                'Plan and start your daily workout &                       grow your fitness.',
+                'Plan and start your daily workout &',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontFamily: "Poppins",
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const Text(
+                'grow your fitness.',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.black,
@@ -85,7 +94,7 @@ class _MyWelcomePageState extends State<MyWelcomePage> {
                           width: 280.0,
                           height: 55.0,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed:() {},
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Color.fromRGBO(219, 248, 255, 1.0),
                               foregroundColor: Colors.black,
@@ -111,30 +120,30 @@ class _MyWelcomePageState extends State<MyWelcomePage> {
             ],
           ),
         ),
-        floatingActionButton: Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: Colors.white,
-              width: 8.0,
-            )
-          ),
-
-          height: 90.0,
-          width: 90.0,
-          margin: const EdgeInsets.only(
-            bottom: 50.0,
-            right: 20.0,
-          ),
-          child: FloatingActionButton(
-            onPressed: () {},
-            backgroundColor: HexColor('#0085D0'),
-            child: const Icon(
-              Icons.navigate_next,
-              size: 70,
-              color: Colors.white,
-            ),
-          ),
-        ));
+        // floatingActionButton: Container(
+        //   decoration: BoxDecoration(
+        //     shape: BoxShape.circle,
+        //     border: Border.all(
+        //       color: Colors.white,
+        //       width: 8.0,
+        //     )
+        //   ),
+        //
+        //   height: 90.0,
+        //   width: 90.0,
+        //   margin: const EdgeInsets.only(
+        //     bottom: 50.0,
+        //     right: 20.0,
+        //   ),
+        //   child: FloatingActionButton(
+        //     onPressed: () {},
+        //     backgroundColor: HexColor('#0085D0'),
+        //     child: const Icon(
+        //       Icons.navigate_next,
+        //       size: 70,
+        //       color: Colors.white,
+        //     ),
+        //   ),
+        );
   }
 }
