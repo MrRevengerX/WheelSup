@@ -3,7 +3,6 @@ import 'package:device_preview/device_preview.dart';
 
 import 'package:device_preview/device_preview.dart';
 import 'package:janudha/screens/HomePage.dart';
-import 'package:janudha/screens/navbar.dart';
 
 import 'screens/HomePage.dart';
 

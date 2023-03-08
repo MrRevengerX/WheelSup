@@ -40,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: Container(
         // color: Colors.blue[50],
-        color: Colors.white,
+        color: Colors.blue[50],
         width: double.infinity,
         height: double.infinity,
         child: Column(
