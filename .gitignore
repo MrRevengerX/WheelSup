@@ -1,3 +1,5 @@
-
+.ipynb_checkpoints
+.idea/
+*.iml
 *.mp4
-server/assets/landmarkedVid.mp4
+*.MOV
