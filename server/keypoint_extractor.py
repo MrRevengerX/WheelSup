@@ -24,11 +24,6 @@ def landmark_styling(image, results):
                              landmark_drawing_spec=mp_drawing_styles.get_default_pose_landmarks_style()
                              )
 
-def scale_video(scale_percent):
-    width = int(image.shape[1] * scale_percent / 100)
-    height = int(image.shape[0] * scale_percent / 100)
-    dimensions = (width, height)
-    return dimensions
 
 def process_video(video):
 
@@ -62,37 +57,6 @@ def process_video(video):
         cap.release()
         output.release()
         cv2.destroyAllWindows()
-
-
-cap = cv2.VideoCapture(r'assets/userSubmission.mp4')
-# Set mediapipe model
-with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
-    while cap.isOpened():
-
-        # Read feed
-        ret, frame = cap.read()
-
-        # Make detections
-        image, results = mediapipe_detection(frame, holistic)
-        #print(results)
-
-        # Draw landmarks
-        landmark_styling(image, results)
-
-
-        dim = scale_video(30)
-        # Show to screen
-
-        image = cv2.resize(image, dim, interpolation = cv2.INTER_AREA)
-
-
-        cv2.imshow('OpenCV Feed', image)
-
-        # Break gracefully
-        if cv2.waitKey(10) & 0xFF == ord('q'):
-            break
-    cap.release()
-    cv2.destroyAllWindows()
 
 
 
