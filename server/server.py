@@ -13,7 +13,7 @@ def shoulder_press():
 
 
     # Read the contents of result details file
-    with open('workout_details.txt', 'r') as f:
+    with open('./result/workout_details.txt', 'r') as f:
         details = f.readlines()
 
     #Extract details from the file and store them in a dictionary (to use in the JSON response)
