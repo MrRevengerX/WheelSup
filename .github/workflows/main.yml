@@ -26,6 +26,6 @@ jobs:
           pip install -r server/requirements.txt
 
       - name: Test server.py
-        uses: pytest-dev/pytest-action@v2
-        with:
-          path: server/test_server.py
+        run: |
+          python -m pytest server/test_server.py
+
