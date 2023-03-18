@@ -1,7 +1,13 @@
-from flask import Flask, request, jsonify,send_file
+from flask import Flask, request, jsonify,send_file,abort
 import os
 
 app = Flask(__name__)
+
+@app.route('/', methods=['GET'])
+def api_directory():
+    abort(404, description='API directory not found')
+    return jsonify({'message': 'API directory not found'}), 404
+
 
 @app.route('/shoulder_press', methods=['POST'])
 def shoulder_press():
@@ -44,4 +50,4 @@ def processed_video(filename):
     return send_file('result/', filename)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
