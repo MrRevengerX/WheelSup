@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+<<<<<<< Updated upstream
 
 class MyCameraPage extends StatefulWidget {
 
+=======
+class MyCameraPage extends StatefulWidget {
+>>>>>>> Stashed changes
   const MyCameraPage({super.key});
 
   @override
@@ -13,7 +17,11 @@ class MyCameraPage extends StatefulWidget {
 class _MyCameraPageState extends State<MyCameraPage> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
+<<<<<<< Updated upstream
   TextStyle(fontSize: 80, fontWeight: FontWeight.bold);
+=======
+      TextStyle(fontSize: 80, fontWeight: FontWeight.bold);
+>>>>>>> Stashed changes
   static const List<Widget> _widgetOptions = <Widget>[
     Text(
       'Index 0: Camera',
@@ -75,6 +83,7 @@ class _MyCameraPageState extends State<MyCameraPage> {
                 ),
               ],
             ),
+<<<<<<< Updated upstream
             Column(
 
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -140,6 +149,103 @@ class _MyCameraPageState extends State<MyCameraPage> {
         ),
       ),
 
+=======
+            const SizedBox(height: 10),
+            const Text(
+              'Camera Placement Instructions \n',
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: "Poppins"),
+            ),
+            const Text(
+              ' 1. Camera should be positioned within 2.5-3 m \n which allows you to see your entire body. ',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.black,
+                fontFamily: "Poppins",
+              ),
+              textAlign: TextAlign.left,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            const Text(
+              '2. Camera should be placed at a direct angle \n facing the user. ',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.black,
+                fontFamily: "Poppins",
+              ),
+              textAlign: TextAlign.left,
+            ),
+            SizedBox(height: 10),
+            const Text(
+              ' 3. Background lighting should be bright enough \n to ensure that you are clearly visible in the \n video.',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.black,
+                fontFamily: "Poppins",
+              ),
+              textAlign: TextAlign.left,
+            ),
+            SizedBox(height: 10),
+            const Text(
+              ' 4. Place the camera on a stable surface(tripod)\n to ensure that it remains steady throughout the\n recording. ',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.black,
+                fontFamily: "Poppins",
+              ),
+              textAlign: TextAlign.left,
+            ),
+            SizedBox(height: 10),
+            const Text(
+              ' 5. Avoid using the zoom function on the camera, \n As this can cause distortion and make it difficult \n for you to see your movements clearly. ',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.black,
+                fontFamily: "Poppins",
+              ),
+              textAlign: TextAlign.left,
+            ),
+            const SizedBox(height: 10),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ButtonBar(alignment: MainAxisAlignment.start, children: [
+                  Container(
+                    width: 280.0,
+                    height: 55.0,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromRGBO(40, 174, 250, 1.0),
+                        foregroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      child: const Text(
+                        "START RECORDING",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontFamily: "Poppins",
+                          fontSize: 16,
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                  ),
+                ]),
+              ],
+            )
+          ],
+        ),
+      ),
+>>>>>>> Stashed changes
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
         items: const <BottomNavigationBarItem>[
@@ -163,4 +269,8 @@ class _MyCameraPageState extends State<MyCameraPage> {
       ),
     );
   }
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes
