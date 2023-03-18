@@ -50,7 +50,7 @@ draw_helpers = mp.solutions.drawing_utils
 holistic_model = mp.solutions.holistic
 
 #Connect the test video from the device
-sample_video = cv2.VideoCapture('datasets/24.mp4')
+sample_video = cv2.VideoCapture('assets/user_upload.mp4')
 
 down = None
 counter = 0

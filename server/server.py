@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify,send_file
+import os
 
 app = Flask(__name__)
 
@@ -8,8 +9,11 @@ def shoulder_press():
     file = request.files['file']
 
     # Save the file to disk
-    filename = 'shoulder_press.mp4'
+    filename = 'user_upload.mp4'
     file.save("uploads/",filename)
+
+    # Run the pose estimator script
+    os.system('python pose_estimator.py')
 
 
     # Read the contents of result details file
