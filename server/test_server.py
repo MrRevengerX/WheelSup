@@ -1,7 +1,7 @@
 import pytest
 from flask import Flask
 
-from server.server import create_app
+from server import create_app
 
 
 @pytest.fixture
