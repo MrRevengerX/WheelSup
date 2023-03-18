@@ -20,7 +20,7 @@ def test_index(app, client):
 
 def test_should_press_endpoint(app, client):
     # create a test video file and add it to a request
-    with open('assets/user_upload.mp4', 'rb') as f:
+    with open("./assets/user_upload.mp4", 'rb') as f:
         file = {'file': (f, 'user_upload.mp4')}
         response = client.post('/shoulder_press', data=file, content_type='multipart/form-data')
     
