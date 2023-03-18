@@ -13,7 +13,7 @@ def shoulder_press():
     file.save("uploads/",filename)
 
     # Run the pose estimator script
-    os.system('python poseestimator.py')
+    os.system('python pose_estimator.py')
 
 
     # Read the contents of result details file
