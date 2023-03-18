@@ -49,6 +49,8 @@ def create_app():
     def processed_video(filename):
         # Return the processed video file
         return send_file('result/', filename)
+    
+    return app
 
 if __name__ == '__main__':
     app = create_app()
