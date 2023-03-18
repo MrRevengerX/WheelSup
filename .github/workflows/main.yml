@@ -24,12 +24,3 @@ jobs:
       - name: Test server.py
       run: |
         python -m pytest server/test_server.py
-      # - name: Test application
-      #   run: |
-      #     python server/server.py &
-      #     sleep 10s
-      #     curl -F "file=@server/assets/user_upload.mp4" http://localhost:5000/shoulder_press
-
-      # - name: Stop application
-      #   run: |
-      #     sudo kill $(sudo lsof -t -i:5000)
