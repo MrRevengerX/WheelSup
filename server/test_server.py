@@ -1,17 +1,18 @@
 import pytest
 from flask import Flask
 
-from server import app
+from server.server import create_app
 
-
-@pytest.fixture
-def client():
-    with app.test_client() as client:
-        yield client
 
 @pytest.fixture
 def app():
-    return app
+    app = create_app()
+    yield app
+
+@pytest.fixture
+def client(app):
+    with app.test_client() as client:
+        yield client
 
 def test_index(app, client):
     response = client.get('/')
