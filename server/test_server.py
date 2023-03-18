@@ -9,6 +9,9 @@ def client():
     with app.test_client() as client:
         yield client
 
+@pytest.fixture
+def app():
+    return app
 
 def test_index(app, client):
     response = client.get('/')
