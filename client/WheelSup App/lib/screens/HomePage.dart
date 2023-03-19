@@ -93,20 +93,6 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(height: 20),
 
             InkWell(
-              //Tried the Clicking effect on Image Icon--------------------
-              //Didn't Work------------------------
-
-              // onTap: () {},
-              // splashColor: Colors.blueGrey.withOpacity(0.5),// needed
-              // child: Ink(
-              //   height: 185,
-              //   decoration: const BoxDecoration(
-              //     image: DecorationImage(
-              //       image: AssetImage("assets/images/blue.png"),
-              //       fit: BoxFit.cover,
-              //     )
-              //   )
-              // )
               onTap: () {},
               child: Image.asset(
                 "assets/images/blue.png",
