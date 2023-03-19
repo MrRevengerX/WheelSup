@@ -3,7 +3,6 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:getwidget/getwidget.dart';
 
 class SummaryPage extends StatefulWidget {
-
   const SummaryPage({super.key});
 
   @override
@@ -11,6 +10,10 @@ class SummaryPage extends StatefulWidget {
 }
 
 class _SummaryPageState extends State<SummaryPage> {
+  List<double> percentages = [0.6, 0.4, 0.8, 0.2];
+  Set<Widget> progressBars = {};
+  int correctReps = 2;
+
   int _selectedIndex = 1;
   static const TextStyle optionStyle =
   TextStyle(fontSize: 80, fontWeight: FontWeight.bold);
@@ -38,12 +41,11 @@ class _SummaryPageState extends State<SummaryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue[50],
       body: SingleChildScrollView(
+        // color: Colors.blue[50],
+
         child: Container(
-          // color: Colors.blue[50],
-          color: Colors.blue[50],
-          width: double.infinity,
-          height: double.infinity,
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,
             // crossAxisAlignment: CrossAxisAlignment.center,
@@ -77,9 +79,7 @@ class _SummaryPageState extends State<SummaryPage> {
                 ],
               ),
 
-
-
-              const SizedBox(height:30),
+              const SizedBox(height: 20),
               const Text(
                 'Workout Summary',
                 textAlign: TextAlign.left,
@@ -90,7 +90,7 @@ class _SummaryPageState extends State<SummaryPage> {
                     fontFamily: "Poppins"),
               ),
 
-              const SizedBox(height:30),
+              const SizedBox(height: 30),
               const Text(
                 'Dumbbell Shoulder Press',
                 textAlign: TextAlign.left,
@@ -104,7 +104,7 @@ class _SummaryPageState extends State<SummaryPage> {
               const SizedBox(height: 30),
 
               const Text(
-                'Average Correction Level of the Workout',
+                'Correction Levels of the Workout',
                 style: TextStyle(
                     fontSize: 18,
                     color: Colors.black,
@@ -112,29 +112,39 @@ class _SummaryPageState extends State<SummaryPage> {
                     fontFamily: "Poppins"),
               ),
 
+              Column(
+                children: [
+                  for (int i = 0; i < percentages.length; i++) ...[
+                    const SizedBox(height: 30),
+                    Text(
+                      'Rep - ${i+1}',
+                      style: const TextStyle(
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontFamily: "Poppins"
+                      ),
+                    ),
+                    GFProgressBar(
+                      percentage: percentages[i],
+                      width: 200,
+                      radius: 100,
+                      lineHeight: 50,
+                      alignment: MainAxisAlignment.center,
+                      backgroundColor: Colors.black38,
+                      progressBarColor: Colors.green,
+                    ),
 
-              const SizedBox(height: 50),
-
-              // Progress Bar 1
-              GFProgressBar(
-                percentage: 0.6,
-                width:200,
-                radius: 100,
-                lineHeight: 50,
-                alignment: MainAxisAlignment.center,
-                backgroundColor : Colors.black38,
-                progressBarColor: Colors.green,
+                    Text(
+                      'Correct Percentage - ${percentages[i]}',
+                      style: const TextStyle(
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontFamily: "Poppins"
+                      ),
+                    ),
+                  ],
+                ],
               ),
-
-              const Text(
-                'Correct Posture Percentage of the Workout - ',
-                style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.black,
-                    fontFamily: "Poppins"),
-              ),
-
-              const SizedBox(height: 50),
 
               const SizedBox(height: 30),
 
@@ -147,42 +157,48 @@ class _SummaryPageState extends State<SummaryPage> {
                     fontFamily: "Poppins"),
               ),
 
-              const Text(
-                'Total Completed Reps - ',
-                style: TextStyle(
+              const SizedBox(height: 10),
+
+              Text(
+                'Total Completed Reps - ${percentages.length}',
+                style: const TextStyle(
                     fontSize: 16,
                     color: Colors.black,
                     fontWeight: FontWeight.w200,
                     fontFamily: "Poppins"),
               ),
 
-              const Text(
-                'Total Correct Reps - ',
-                style: TextStyle(
+              const SizedBox(height: 10),
+
+              Text(
+                'Total Correct Reps - $correctReps',
+                style: const TextStyle(
                     fontSize: 16,
                     color: Colors.black,
                     fontWeight: FontWeight.w200,
                     fontFamily: "Poppins"),
               ),
+
+              const SizedBox(height: 10),
+
               ElevatedButton(
                 onPressed: () {
                   // Handle button press
                 },
-                child: Text('Watch Video'),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.blue, // background color
                   onPrimary: Colors.white, // text color
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8), // button padding
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16, vertical: 8), // button padding
                 ),
+
+
+                child: const Text('Watch Video'),
               )
             ],
           ),
         ),
       ),
-
-
-
-
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
         items: const <BottomNavigationBarItem>[
