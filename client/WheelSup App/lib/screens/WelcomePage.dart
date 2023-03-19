@@ -15,12 +15,9 @@ class _MyWelcomePageState extends State<MyWelcomePage> {
           width: double.infinity,
           height: double.infinity,
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 160),
                   Text(
@@ -120,30 +117,6 @@ class _MyWelcomePageState extends State<MyWelcomePage> {
             ],
           ),
         ),
-        // floatingActionButton: Container(
-        //   decoration: BoxDecoration(
-        //     shape: BoxShape.circle,
-        //     border: Border.all(
-        //       color: Colors.white,
-        //       width: 8.0,
-        //     )
-        //   ),
-        //
-        //   height: 90.0,
-        //   width: 90.0,
-        //   margin: const EdgeInsets.only(
-        //     bottom: 50.0,
-        //     right: 20.0,
-        //   ),
-        //   child: FloatingActionButton(
-        //     onPressed: () {},
-        //     backgroundColor: HexColor('#0085D0'),
-        //     child: const Icon(
-        //       Icons.navigate_next,
-        //       size: 70,
-        //       color: Colors.white,
-        //     ),
-        //   ),
         );
   }
 }
