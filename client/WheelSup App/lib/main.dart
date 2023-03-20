@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
 
 import 'package:device_preview/device_preview.dart';
-import 'package:janudha/screens/HomePage.dart';
+// import 'package:janudha/screens/HomePage.dart';
+
 
 import 'screens/HomePage.dart';
 
@@ -33,8 +34,10 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           brightness: Brightness.dark,
         ),
+
         // home: MyHomePage(),
         home: const MyHomePage(),
+
 
 
     );
