@@ -7,6 +7,7 @@ import 'package:device_preview/device_preview.dart';
 
 import 'screens/WelcomePage.dart';
 
+
 void main() => runApp(
   DevicePreview(
     builder: (context) => MyApp(), // Wrap your app
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
     // );
 
     return  MaterialApp(
+
         locale: DevicePreview.locale(context),
         builder: DevicePreview.appBuilder,
         title: "Flutter Demo",
@@ -35,6 +37,7 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
         ),
         home: MyWelcomePage(),
+
     );
   }
 }
