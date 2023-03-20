@@ -5,7 +5,7 @@ import 'package:device_preview/device_preview.dart';
 // import 'package:janudha/screens/HomePage.dart';
 
 
-import 'screens/WelcomePage.dart';
+import 'screens/HomePage.dart';
 
 void main() => runApp(
   DevicePreview(
@@ -34,7 +34,12 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           brightness: Brightness.dark,
         ),
-        home: MyWelcomePage(),
+
+        // home: MyHomePage(),
+        home: const MyHomePage(),
+
+
+
     );
   }
 }
