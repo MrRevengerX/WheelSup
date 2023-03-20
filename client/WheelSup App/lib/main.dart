@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
 
+
 import 'screens/CameraPage.dart';
+
+import 'package:device_preview/device_preview.dart';
+// import 'package:janudha/screens/HomePage.dart';
+
+
+
 
 void main() => runApp(
       DevicePreview(
@@ -24,6 +31,7 @@ class MyApp extends StatelessWidget {
     //   ),
     // );
 
+
     return MaterialApp(
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
@@ -32,6 +40,9 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
       ),
       home: MyCameraPage(),
+
+
+
     );
   }
 }
