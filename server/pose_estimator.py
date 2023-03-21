@@ -227,10 +227,6 @@ with open('./result/workout_details.txt', 'w') as f:
     # Write the percentage of correct reps for each rep
     for rep in reps:
         f.write(f"{rep}\n")
-    
-    
-        
-
 
 sample_video.release()
 cv2.destroyAllWindows()
