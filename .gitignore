@@ -1,0 +1,9 @@
+/client/.idea
+/server/.ipynb_checkpoints
+.ipynb_checkpoints
+.idea/
+*.iml
+*.mp4
+*.MOV
+
+!server/assets/user_upload.mp4
