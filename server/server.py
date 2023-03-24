@@ -1,7 +1,10 @@
 from flask import Flask, request, jsonify,send_file
 import os
+from flask_cors import CORS
 
 app = Flask(__name__)
+
+cors = CORS(app, origins=["http://localhost:*"])
 
 @app.route('/shoulder_press', methods=['POST'])
 def shoulder_press():
@@ -42,6 +45,30 @@ def shoulder_press():
 def processed_video(filename):
     # Return the processed video file
     return send_file('result/', filename)
+
+@app.route('/', methods=['GET'])
+def handle_get_request():
+    #Read the contents of result details file
+    with open('Desktop/API/workout_details.txt', 'r') as f:
+        details = f.readlines()
+
+    workout_details = {
+        'video': f'http://localhost:5000/video/processed/shoulder_press.mp4',
+        'total_reps': int(details[0]),
+        'correct_reps': int(details[1]),
+        'incorrect_reps': int(details[2]),
+        'rep_details': {}
+    }
+
+    for i in range(3, len(details), 2):
+        rep_num = int(details[i])
+        correct_percentage = float(details[i+1])
+        workout_details['rep_details'][str(rep_num)] = correct_percentage
+
+    # # Return a JSON response
+    response = jsonify(workout_details)
+
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True)
