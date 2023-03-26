@@ -5,10 +5,10 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-# cors = CORS(app, origins=["http://localhost:*"])
+#cors = CORS(app, origins=["http://localhost:*"])
 
 @app.route('/upload', methods=['POST'])
-def upload():
+def upload_test():
     if 'file' not in request.files:
         return 'No file uploaded', 400
 
@@ -21,6 +21,7 @@ def upload():
         file.save(filename)
         # do any further processing with the file here
         return 'File uploaded successfully', 200
+
 
 @app.route('/shoulder_press', methods=['POST'])
 def shoulder_press():
@@ -57,13 +58,15 @@ def shoulder_press():
     response = jsonify({'workout_details': workout_details})
     return response
 
+
 @app.route('/video/processed/<filename>')
 def processed_video(filename):
     # Return the processed video file
     return send_file('result/', filename)
 
+
 @app.route('/', methods=['GET'])
-def handle_get_request():
+def get_request_test():
     #Read the contents of result details file
     with open('Desktop/API/workout_details.txt', 'r') as f:
         details = f.readlines()
