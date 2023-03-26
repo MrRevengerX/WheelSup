@@ -3,8 +3,24 @@ import os
 from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
-cors = CORS(app, origins=["http://localhost:*"])
+# cors = CORS(app, origins=["http://localhost:*"])
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    if 'file' not in request.files:
+        return 'No file uploaded', 400
+
+    file = request.files['file']
+    if file.filename == '':
+        return 'No file selected', 400
+
+    if file:
+        filename = file.filename
+        file.save(filename)
+        # do any further processing with the file here
+        return 'File uploaded successfully', 200
 
 @app.route('/shoulder_press', methods=['POST'])
 def shoulder_press():
@@ -13,7 +29,7 @@ def shoulder_press():
 
     # Save the file to disk
     filename = 'user_upload.mp4'
-    file.save("uploads/",filename)
+    file.save(filename)
 
     # Run the pose estimator script
     os.system('python pose_estimator.py')

@@ -3,8 +3,14 @@ import 'package:hexcolor/hexcolor.dart';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart' as path_provider;
+import 'dart:html' as html;
 
-
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'dart:convert' show base64;
+// import 'dart:io' if (!kIsWeb) 'package:file_picker/file_picker.dart';
+import 'dart:html' as html;
 
 class MyExercisePage extends StatefulWidget {
   @override
@@ -12,6 +18,72 @@ class MyExercisePage extends StatefulWidget {
 }
 
 class _MyExercisePage extends State<MyExercisePage> {
+  String? _filePath;
+
+  Future<void> _pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      setState(() {
+        _filePath = result.files.single.path;
+      });
+    }
+  }
+
+  Future<void> _uploadFile() async {
+    if (kIsWeb) {
+      final input = html.FileUploadInputElement()..accept = 'video/*';
+      input.click();
+
+      await input.onChange.first;
+
+      final file = input.files!.first;
+      final reader = html.FileReader();
+      reader.readAsDataUrl(file);
+      await reader.onLoad.first;
+
+      final content = reader.result as String?;
+      final prefix = 'data:video/mp4;base64,';
+      final bytes = base64.decode(content!.substring(prefix.length));
+      final uri = Uri.parse('http://localhost:5000/upload');
+      final request = http.MultipartRequest('POST', uri)
+        ..files.add(http.MultipartFile.fromBytes(
+            'file', bytes,
+            filename: file.name));
+      final response = await request.send();
+      if (response.statusCode == 200) {
+        print('Uploaded ...');
+      } else {
+        print('Something went wrong!');
+      }
+    } else {
+      final result = await FilePicker.platform.pickFiles();
+
+      if (result != null) {
+        final fileBytes = result.files.single.bytes;
+        final fileName = result.files.single.name;
+        // use the fileBytes and fileName as needed
+        // final fileName = path.basename(file!.path);
+
+        final uri = Uri.parse('http://localhost:5000/shoulder_press');
+        final request = http.MultipartRequest('POST', uri)
+          ..files.add(await http.MultipartFile.fromPath('file', file!.path,
+              filename: fileName));
+        final response = await request.send();
+        if (response.statusCode == 200) {
+          print('Uploaded ...');
+        } else {
+          print('Something went wrong!');
+        }
+      }
+
+    }
+  }
+
+
+
+
+
   File? file;
   int _selectedIndex = 1;
   static const TextStyle optionStyle =
@@ -152,48 +224,6 @@ class _MyExercisePage extends State<MyExercisePage> {
               width: 300,
             ),
             const SizedBox(height: 30),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ButtonBar(alignment: MainAxisAlignment.start, children: [
-                  SizedBox(
-                    width: 280.0,
-                    height: 60.0,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        final result = await FilePicker.platform.pickFiles(
-                          type: FileType.any,
-                        );
-                        if (result != null) {
-                          final path = result.files.single.path!;
-                          setState(() {
-                            file = File(path);
-                          });
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                        const Color.fromRGBO(219, 248, 255, 1.0),
-                        foregroundColor: Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                      child: const Text(
-                        "UPLOAD VIDEO",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontFamily: "Poppins",
-                          fontSize: 16,
-                        ),
-                        textAlign: TextAlign.left,
-                      ),
-                    ),
-                  ),
-                ]),
-              ],
-            )
-
             // Row(
             //   mainAxisAlignment: MainAxisAlignment.center,
             //   children: [
@@ -203,16 +233,14 @@ class _MyExercisePage extends State<MyExercisePage> {
             //         height: 60.0,
             //         child: ElevatedButton(
             //           onPressed: () async {
-            //             var uri =
-            //             Uri.parse('http://localhost:5000/shoulder_press');
-            //             var request = http.MultipartRequest('POST', uri);
-            //             request.files.add(await http.MultipartFile.fromPath(
-            //                 'file', file!.path));
-            //             var response = await request.send();
-            //             if (response.statusCode == 200) {
-            //               print('Uploaded ...');
-            //             } else {
-            //               print('Something went wrong!');
+            //             final result = await FilePicker.platform.pickFiles(
+            //               type: FileType.any,
+            //             );
+            //             if (result != null) {
+            //               final path = result.files.single.path!;
+            //               setState(() {
+            //                 file = File(path);
+            //               });
             //             }
             //           },
             //           style: ElevatedButton.styleFrom(
@@ -237,6 +265,56 @@ class _MyExercisePage extends State<MyExercisePage> {
             //     ]),
             //   ],
             // )
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ButtonBar(alignment: MainAxisAlignment.start, children: [
+                  SizedBox(
+                    width: 280.0,
+                    height: 60.0,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        final result = await FilePicker.platform.pickFiles();
+                        if (result != null) {
+                          final fileBytes = result.files.single.bytes;
+                          final fileName = result.files.single.name;
+
+                          final uri = Uri.parse('http://localhost:5000/upload');
+                          final request = http.MultipartRequest('POST', uri)
+                          ..files.add(http.MultipartFile.fromBytes('file', fileBytes as List<int>,
+                          filename: fileName));
+                          final response = await request.send();
+
+                          if (response.statusCode == 200) {
+                            print('Uploaded');
+                          } else {
+                            print('Something went wrong!');
+                          }
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                        const Color.fromRGBO(219, 248, 255, 1.0),
+                        foregroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      child: const Text(
+                        "UPLOAD VIDEO",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontFamily: "Poppins",
+                          fontSize: 16,
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                  ),
+                ]),
+              ],
+            )
           ],
         ),
       ),
