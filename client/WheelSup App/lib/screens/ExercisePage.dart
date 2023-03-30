@@ -160,15 +160,15 @@ class _MyExercisePage extends State<MyExercisePage> {
                       height: 60.0,
                       child: ElevatedButton(
                         onPressed: () async {
-                          final result = await FilePicker.platform.pickFiles();
+                          final result = await FilePicker.platform.pickFiles(type: FileType.video);
                           if (result != null) {
                             final fileBytes = result.files.single.bytes;
                             final fileName = result.files.single.name;
 
-                            final uri = Uri.parse('http://localhost:5000/upload');
+                            final uri = Uri.parse('http://localhost:5000/api');
                             final request = http.MultipartRequest('POST', uri)
-                            ..files.add(http.MultipartFile.fromBytes('file', fileBytes as List<int>,
-                            filename: fileName));
+                              ..files.add(http.MultipartFile.fromBytes('video', fileBytes!,
+                                  filename: fileName));
                             final response = await request.send();
 
                             if (response.statusCode == 200) {

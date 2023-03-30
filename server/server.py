@@ -1,11 +1,33 @@
+import subprocess
+import cv2
 from flask import Flask, request, jsonify,send_file
 import os
 from flask_cors import CORS
+import numpy as np
 
 app = Flask(__name__)
 CORS(app)
 
 #cors = CORS(app, origins=["http://localhost:*"])
+
+@app.route('/api', methods=['POST'])
+def upload_video():
+    video_file = request.files['video']
+    video_bytes = video_file.read()
+    video_np = np.frombuffer(video_bytes, dtype=np.uint8)
+    video = cv2.imdecode(video_np, cv2.IMREAD_UNCHANGED)
+
+    # Save the decoded video stream to a file
+    with open('uploads/user_upload.mp4', 'wb') as f:
+        f.write(video_bytes)
+
+    # Pass the video file name to the second Python script as a command-line argument
+    subprocess.run(['python', 'pose_estimator.py', 'user_upload.mp4'])
+
+    return 'Success'
+    
+    # Process the video as needed
+    
 
 @app.route('/upload', methods=['POST'])
 def upload_test():
@@ -68,7 +90,7 @@ def processed_video(filename):
 @app.route('/', methods=['GET'])
 def get_request_test():
     #Read the contents of result details file
-    with open('Desktop/API/workout_details.txt', 'r') as f:
+    with open('result/workout_details.txt', 'r') as f:
         details = f.readlines()
 
     workout_details = {
