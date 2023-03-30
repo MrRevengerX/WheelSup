@@ -297,8 +297,8 @@ class _MyExercisePage extends State<MyExercisePage> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.menu),
-            label: 'Summary',
+            icon: Icon(Icons.info),
+            label: 'Info',
           ),
         ],
         currentIndex: _selectedIndex,
