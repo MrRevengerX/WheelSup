@@ -4,6 +4,7 @@
 #Import all the nessacary libraries to run the pose estimator
 
 #Import mediapipe to be used for the model
+import sys
 import mediapipe as mp
 #Import opencv for rendaring and drawing capabilities
 import cv2
@@ -18,8 +19,6 @@ import pickle #Save and oad ML model
 with open('shoulder_press.pkl', 'rb') as f:
     model = pickle.load(f)
     print("Model Loaded")
-    
-
 
 #Display the results of the prediction done by the model
 draw_helpers = mp.solutions.drawing_utils 
@@ -50,7 +49,14 @@ draw_helpers = mp.solutions.drawing_utils
 holistic_model = mp.solutions.holistic
 
 #Connect the test video from the device
-sample_video = cv2.VideoCapture('assets/user_upload.mp4')
+video_file = sys.argv[1]
+sample_video = cv2.VideoCapture(video_file)
+
+os.chdir(os.path.join(os.getcwd(), ".."))
+
+file_path = os.path.join(os.getcwd(), 'client', 'WheelSup App', 'assets', 'uploads', 'user_upload.mp4')
+sample_video = cv2.VideoCapture(file_path)
+os.chdir(os.path.join(os.getcwd(), "server"))
 
 down = None
 counter = 0

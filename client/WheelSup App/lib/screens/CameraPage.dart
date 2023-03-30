@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-
 import 'HomePage.dart';
 import 'SummaryPage.dart';
 
@@ -13,7 +12,6 @@ class MyCameraPage extends StatefulWidget {
 
 class _MyCameraPageState extends State<MyCameraPage> {
   int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[    MyCameraPage(),    MyHomePage(),    SummaryPage(),  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -24,19 +22,19 @@ class _MyCameraPageState extends State<MyCameraPage> {
       case 0:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => MyCameraPage()),
+          MaterialPageRoute(builder: (context) => const MyCameraPage()),
         );
         break;
       case 1:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => MyHomePage()),
+          MaterialPageRoute(builder: (context) => const MyHomePage()),
         );
         break;
       case 2:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => SummaryPage()),
+          MaterialPageRoute(builder: (context) => const SummaryPage()),
         );
         break;
     }
