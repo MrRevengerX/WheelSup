@@ -17,9 +17,16 @@ def upload_video():
     video_np = np.frombuffer(video_bytes, dtype=np.uint8)
     video = cv2.imdecode(video_np, cv2.IMREAD_UNCHANGED)
 
+    os.chdir(os.path.join(os.getcwd(), ".."))
+
+    file_path = os.path.join(os.getcwd(), 'client', 'WheelSup App', 'assets', 'uploads', 'user_upload.mp4')
+
     # Save the decoded video stream to a file
-    with open('uploads/user_upload.mp4', 'wb') as f:
+    with open(file_path, 'wb') as f:
         f.write(video_bytes)
+    
+
+    os.chdir(os.path.join(os.getcwd(), "server"))
 
     # Pass the video file name to the second Python script as a command-line argument
     subprocess.run(['python', 'pose_estimator.py', 'user_upload.mp4'])

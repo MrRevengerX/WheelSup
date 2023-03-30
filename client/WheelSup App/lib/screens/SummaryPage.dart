@@ -3,9 +3,11 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:video_player/video_player.dart';
 import 'dart:convert';
 import 'CameraPage.dart';
 import 'HomePage.dart';
+import 'VideoPlayer.dart';
 
 class SummaryPage extends StatefulWidget {
   const SummaryPage({super.key});
@@ -55,7 +57,7 @@ class _SummaryPageState extends State<SummaryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Card(
           child: FutureBuilder(
@@ -139,7 +141,7 @@ class _SummaryPageState extends State<SummaryPage> {
                         children: [
                           const SizedBox(height: 30),
                           Text(
-                            'Rep - $i',
+                            'Rep - ${int.parse(i)+1}',
                             style: const TextStyle(
                             fontSize: 15,
                             color: Colors.black,
@@ -211,14 +213,28 @@ class _SummaryPageState extends State<SummaryPage> {
 
 
 
+                            // ElevatedButton(
+                            //   onPressed: () async {
+                            //     var url = videoUrl;
+                            //     if (await canLaunchUrl(url as Uri)) {
+                            //       await launchUrl(url as Uri);
+                            //     } else {
+                            //       throw 'Could not launch $url';
+                            //     }
+                            //   },
+                            //   style: ElevatedButton.styleFrom(
+                            //     foregroundColor: Colors.white, backgroundColor: Colors.blue, // text color
+                            //     padding: const EdgeInsets.symmetric(
+                            //         horizontal: 16, vertical: 8), // button padding
+                            //   ),
+                            //   child: const Text('Watch Video'),
+                            // ),
                             ElevatedButton(
-                              onPressed: () async {
-                                var url = videoUrl;
-                                if (await canLaunchUrl(url as Uri)) {
-                                  await launchUrl(url as Uri);
-                                } else {
-                                  throw 'Could not launch $url';
-                                }
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const VideoPlayerScreen(videoUrl: 'assets/uploads/user_upload.mp4')),
+                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.white, backgroundColor: Colors.blue, // text color
@@ -226,8 +242,10 @@ class _SummaryPageState extends State<SummaryPage> {
                                     horizontal: 16, vertical: 8), // button padding
                               ),
                               child: const Text('Watch Video'),
-                            )
-                          ],
+                            ),
+
+                      const SizedBox(height: 16),
+                    ],
                         );
 
               } else if (snapshot.hasError) {
@@ -311,3 +329,4 @@ class Exercise {
     return data;
   }
 }
+

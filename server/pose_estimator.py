@@ -49,9 +49,14 @@ draw_helpers = mp.solutions.drawing_utils
 holistic_model = mp.solutions.holistic
 
 #Connect the test video from the device
-# video_file = sys.argv[1]
-# sample_video = cv2.VideoCapture(video_file)
-sample_video = cv2.VideoCapture('uploads/user_upload.mp4')
+video_file = sys.argv[1]
+sample_video = cv2.VideoCapture(video_file)
+
+os.chdir(os.path.join(os.getcwd(), ".."))
+
+file_path = os.path.join(os.getcwd(), 'client', 'WheelSup App', 'assets', 'uploads', 'user_upload.mp4')
+sample_video = cv2.VideoCapture(file_path)
+os.chdir(os.path.join(os.getcwd(), "server"))
 
 down = None
 counter = 0

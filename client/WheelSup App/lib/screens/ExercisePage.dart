@@ -3,6 +3,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:summary_page/screens/SummaryPage.dart';
 
 class MyExercisePage extends StatefulWidget {
   const MyExercisePage({super.key});
@@ -173,6 +174,10 @@ class _MyExercisePage extends State<MyExercisePage> {
 
                             if (response.statusCode == 200) {
                               print('Uploaded');
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => SummaryPage()),
+                              );
                             } else {
                               print('Something went wrong!');
                             }
