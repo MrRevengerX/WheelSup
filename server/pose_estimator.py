@@ -42,7 +42,7 @@ def calculate_pose_angle(start_point, mid_point, end_point):
     if angle > max_angle:
         angle = 360 - angle
         
-    return angle 
+    return angle
 
 
 #Display the results of the prediction done by the model

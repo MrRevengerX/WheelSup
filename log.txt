@@ -1,0 +1,5 @@
+Progress - 120, 0, 0
+Module retriever - 60, 60, 0
+Module retriever - 80, 40, 0
+
+3 outcomes in total.
