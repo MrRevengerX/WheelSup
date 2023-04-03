@@ -42,7 +42,9 @@ class _MyExercisePage extends State<MyExercisePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        body: SingleChildScrollView(
+        body: Padding(
+          padding: const EdgeInsets.all(20.20), // s
+          child:SingleChildScrollView(
           child: Container(
           child: Column(
             children: [
@@ -159,14 +161,65 @@ class _MyExercisePage extends State<MyExercisePage> {
                     SizedBox(
                       width: 280.0,
                       height: 60.0,
-                      child: ElevatedButton(
+                  // FlatButton(
+                  //   onPressed: () async {
+                  //     final result = await FilePicker.platform.pickFiles(type: FileType.video);
+                  //     if (result != null) {
+                  //       // Code to upload the file to the server...
+                  //       showDialog(
+                  //         context: context,
+                  //         builder: (BuildContext context) {
+                  //           return AlertDialog(
+                  //             title: Text("File Uploaded"),
+                  //             content: Text("Your video has been successfully uploaded."),
+                  //             actions: [
+                  //               TextButton(
+                  //                 child: Text("OK"),
+                  //                 onPressed: () {
+                  //                   Navigator.of(context).pop();
+                  //                   Navigator.push(
+                  //                     context,
+                  //                     MaterialPageRoute(builder: (context) => SummaryPage()),
+                  //                   );
+                  //                 },
+                  //               ),
+                  //             ],
+                  //           );
+                  //         },
+                  //       );
+                  //     }
+                  //   },
+                  //   child: Text("UPLOAD VIDEO"),
+                  // );
+
+
+
+                  child: ElevatedButton(
                         onPressed: () async {
+
                           final result = await FilePicker.platform.pickFiles(type: FileType.video);
                           if (result != null) {
+
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                      title: Text("Video Proccessing"),
+                                      content: Text("Your video is processing. Please wait"),
+                                      // actions: [
+                                      //   TextButton(
+                                      //     onPressed: () { Navigator.of(context).pop(); },
+                                      //     child: Text("OK"),
+                                      //   )
+                                      // ]
+                                  );
+                                }
+                              );
+
                             final fileBytes = result.files.single.bytes;
                             final fileName = result.files.single.name;
 
-                            final uri = Uri.parse('http://localhost:5000/api');
+                            final uri = Uri.parse('http://localhost:5000/shoulder_press');
                             final request = http.MultipartRequest('POST', uri)
                               ..files.add(http.MultipartFile.fromBytes('video', fileBytes!,
                                   filename: fileName));
@@ -174,6 +227,7 @@ class _MyExercisePage extends State<MyExercisePage> {
 
                             if (response.statusCode == 200) {
                               print('Uploaded');
+
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) => SummaryPage()),
@@ -181,6 +235,29 @@ class _MyExercisePage extends State<MyExercisePage> {
                             } else {
                               print('Something went wrong!');
                             }
+                          }
+                          else{
+                            // Store a reference to the BuildContext object
+                            final contextRef = context;
+
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                      title: Text("Error"),
+                                      content: Text("The video selected cannot be proccessed"),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            // Use the stored reference to the BuildContext object
+                                            Navigator.of(contextRef).pop();
+                                          },
+                                          child: Text("OK"),
+                                        )
+                                      ]
+                                  );
+                                }
+                            );
                           }
                         },
                         style: ElevatedButton.styleFrom(
@@ -209,6 +286,7 @@ class _MyExercisePage extends State<MyExercisePage> {
           ),
         ),
       ),
+        ),
 
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color.fromRGBO(255, 255, 255, 1),

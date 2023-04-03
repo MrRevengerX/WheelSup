@@ -49,14 +49,31 @@ draw_helpers = mp.solutions.drawing_utils
 holistic_model = mp.solutions.holistic
 
 #Connect the test video from the device
-video_file = sys.argv[1]
-sample_video = cv2.VideoCapture(video_file)
+# video_file = sys.argv[1]
+# sample_video = cv2.VideoCapture(video_file)
 
-os.chdir(os.path.join(os.getcwd(), ".."))
+# os.chdir(os.path.join(os.getcwd(), ".."))
 
-file_path = os.path.join(os.getcwd(), 'client', 'WheelSup App', 'assets', 'uploads', 'user_upload.mp4')
+# file_path = os.path.join(os.getcwd(), 'client', 'WheelSup App', 'assets', 'uploads', 'shoulder_press.mp4')
+file_path = 'uploads/shoulder_press.mp4'
 sample_video = cv2.VideoCapture(file_path)
-os.chdir(os.path.join(os.getcwd(), "server"))
+# os.chdir(os.path.join(os.getcwd(), "server"))
+
+# Get the video's frames per second (fps)
+fps = sample_video.get(cv2.CAP_PROP_FPS)
+
+# Define the output video file name
+output_file = 'processed/output_shoulder_press.mp4'
+
+# Define the codec to use
+fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+
+# Define the frame size
+frame_size = (int(sample_video.get(3)), int(sample_video.get(4)))
+
+# Define the codec and create a VideoWriter object
+fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+out = cv2.VideoWriter(output_file, fourcc, fps, frame_size)   
 
 down = None
 counter = 0
@@ -183,6 +200,8 @@ with holistic_model.Holistic(min_detection_confidence=0.5, min_tracking_confiden
         except:
             pass
 
+        # Write the processed frame to the output video
+        out.write(bgr_frame)
         
         #Display the frames    
         cv2.imshow('Results Feed', bgr_frame)
@@ -235,6 +254,7 @@ with open('./result/workout_details.txt', 'w') as f:
         f.write(f"{rep}\n")
 
 sample_video.release()
+out.release()
 cv2.destroyAllWindows()
 
 

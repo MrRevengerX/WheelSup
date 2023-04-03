@@ -233,7 +233,7 @@ class _SummaryPageState extends State<SummaryPage> {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => const VideoPlayerScreen(videoUrl: 'assets/uploads/user_upload.mp4')),
+                                  MaterialPageRoute(builder: (context) => const VideoPlayerScreen(videoUrl: 'http://localhost:5000/video')),
                                 );
                               },
                               style: ElevatedButton.styleFrom(
