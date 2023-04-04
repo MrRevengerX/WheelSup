@@ -1,9 +1,10 @@
 import subprocess
 import cv2
-from flask import Flask, request, jsonify,send_file
+from flask import Flask, make_response, request, jsonify,send_file
 import os
 from flask_cors import CORS
 import numpy as np
+import ffmpeg
 
 app = Flask(__name__)
 CORS(app)
@@ -35,9 +36,13 @@ def upload_video():
 
 @app.route('/video')
 def serve_video():
-    video_file = 'processed/output_shoulder_press.mp4'
-    return send_file(video_file, mimetype='video/mp4')
- 
+    input_file = 'processed/output_shoulder_press.mp4'
+    return send_file(input_file, mimetype='video/mp4', as_attachment=False, conditional=False)
+
+    # headers = {'Content-Range': 'bytes 0-50000000/{}'.format(os.path.getsize(video_file))}
+    # response = make_response(send_file(video_file, mimetype='video/mp4', as_attachment=False, conditional=True, last_modified=os.stat(video_file).st_mtime))
+    # response.headers.extend(headers)
+    # return response
 
 @app.route('/upload', methods=['POST'])
 def upload_test():

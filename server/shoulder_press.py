@@ -65,14 +65,12 @@ fps = sample_video.get(cv2.CAP_PROP_FPS)
 # Define the output video file name
 output_file = 'processed/output_shoulder_press.mp4'
 
-# Define the codec to use
-fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 
 # Define the frame size
 frame_size = (int(sample_video.get(3)), int(sample_video.get(4)))
 
 # Define the codec and create a VideoWriter object
-fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+fourcc = cv2.VideoWriter_fourcc(*'avc1')
 out = cv2.VideoWriter(output_file, fourcc, fps, frame_size)   
 
 down = None

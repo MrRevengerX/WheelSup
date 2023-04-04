@@ -56,6 +56,12 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   @override
   void initState() {
     super.initState();
+    // _controller = VideoPlayerController.network(
+    //   widget.videoUrl,
+    //   httpHeaders: {'range': 'bytes=0-50000000'},
+    // )..initialize().then((_) {
+    //   setState(() {});
+    // });
     _controller = VideoPlayerController.network(widget.videoUrl)
       ..initialize().then((_) {
         setState(() {});
