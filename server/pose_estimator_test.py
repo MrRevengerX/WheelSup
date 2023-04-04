@@ -8,13 +8,15 @@ def test_load_model():
         model = pickle.load(f)
     assert model is not None
 
-# If uploads folder is not empty, fail the test
-def test_read_video_file():
-    assert len(os.listdir('./server/uploads')) == 0
+# If result folder has files other than pattern.txt file, fail the test
+def test_upload_file():
+    assert len(os.listdir('./server/result')) == 1
+    assert os.path.isfile('./server/result/pattern.txt')
 
-# If the result folder is not empty, fail the test
-def test_write_video_file():
-    assert len(os.listdir('./server/result')) == 0
+# If the uploads folder has files other than upload_folder.txt file, fail the test
+def test_result_file():
+    assert len(os.listdir('./server/uploads')) == 1
+    assert os.path.isfile('./server/uploads/upload_folder.txt')
 
 
 

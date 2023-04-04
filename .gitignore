@@ -9,6 +9,3 @@
 /server/.pytest_cache
 /server/.ipynb_checkpoints
 .pytest_cache
-
-
-!server/assets/user_upload.mp4
