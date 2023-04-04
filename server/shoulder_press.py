@@ -4,14 +4,12 @@
 #Import all the nessacary libraries to run the pose estimator
 
 #Import mediapipe to be used for the model
-import sys
 import mediapipe as mp
 #Import opencv for rendaring and drawing capabilities
 import cv2
 
 import numpy as np #Handle numpy arrays
 import pandas as pd #Handle tabular data
-import os #Handle folder structure
 import pickle #Save and oad ML model
 
 
@@ -25,12 +23,7 @@ draw_helpers = mp.solutions.drawing_utils
 holistic_model = mp.solutions.holistic
 
 #Calculate angle between 3 landmark points
-def calculate_pose_angle(start_point, mid_point, end_point):
-    #Convert landmark coords to numpy array
-#     start_point = np.array(start_point) 
-#     mid_point = np.array(mid_point) 
-#     end_point = np.array(end_point) 
-    
+def calculate_pose_angle(start_point, mid_point, end_point):    
     max_angle = 180.0
     
     #[0] = x, [1] = y, [2] = z
@@ -43,31 +36,22 @@ def calculate_pose_angle(start_point, mid_point, end_point):
         
     return angle 
 
-
 #Display the results of the prediction done by the model
 draw_helpers = mp.solutions.drawing_utils 
 holistic_model = mp.solutions.holistic
 
-#Connect the test video from the device
-# video_file = sys.argv[1]
-# sample_video = cv2.VideoCapture(video_file)
-
-# os.chdir(os.path.join(os.getcwd(), ".."))
-
-# file_path = os.path.join(os.getcwd(), 'client', 'WheelSup App', 'assets', 'uploads', 'shoulder_press.mp4')
+#Get path of uploaded video
 file_path = 'uploads/shoulder_press.mp4'
-sample_video = cv2.VideoCapture(file_path)
-# os.chdir(os.path.join(os.getcwd(), "server"))
+uploaded_video = cv2.VideoCapture(file_path)
 
-# Get the video's frames per second (fps)
-fps = sample_video.get(cv2.CAP_PROP_FPS)
+#Get the video's frames per second 
+fps = uploaded_video.get(cv2.CAP_PROP_FPS)
 
-# Define the output video file name
-output_file = 'processed/output_shoulder_press.mp4'
-
+#Define the output video file name
+output_file = 'result/output_shoulder_press.mp4'
 
 # Define the frame size
-frame_size = (int(sample_video.get(3)), int(sample_video.get(4)))
+frame_size = (int(uploaded_video.get(3)), int(uploaded_video.get(4)))
 
 # Define the codec and create a VideoWriter object
 fourcc = cv2.VideoWriter_fourcc(*'avc1')
@@ -83,9 +67,9 @@ status = None
 with holistic_model.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
     
     #Loop through each frame of the video 
-    while sample_video.isOpened():
+    while uploaded_video.isOpened():
         #Returns the status of the read and the frame as an image
-        ret, frame = sample_video.read()
+        ret, frame = uploaded_video.read()
         
         #If frame is read correctly, status is true
         if ret == False:
@@ -124,10 +108,7 @@ with holistic_model.Holistic(min_detection_confidence=0.5, min_tracking_confiden
             #Store the top class of the prediction
             pose_class_status = model.predict(features.values)[0]
             #Store the probability of the prediction
-            pose_class_status_prob = model.predict_proba(features.values)[0]  
-            
-            #Append correct-incorrect probabilitiesto the frame_list convert to string
-            
+            pose_class_status_prob = model.predict_proba(features.values)[0]              
             
             #Dictionary to store the coords in pixels of the landmarks
             points = {}
@@ -159,13 +140,6 @@ with holistic_model.Holistic(min_detection_confidence=0.5, min_tracking_confiden
                 counter += 1
                 rep_list.append(frame_list)
                 frame_list = []
-            
-            # #For Left Arm
-            # elif down and calculate_pose_angle(points[15], points[13], points[11]) <= 90:
-            #     down = False
-            #     counter += 1
-            #     rep_list.append(frame_list)
-            #     frame_list = []
             
             #Set a rectangle box to display the results of the prediction in the video frame
             #rectangle(container, top_coord, bottom_coord, color, line_thickness)
@@ -201,26 +175,23 @@ with holistic_model.Holistic(min_detection_confidence=0.5, min_tracking_confiden
         # Write the processed frame to the output video
         out.write(bgr_frame)
         
-        #Display the frames    
-        cv2.imshow('Results Feed', bgr_frame)
 
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
 
-
 reps = []
 correct_num = 0
 incorrect_num = 0
-
 
 #Display the overall result of the exercise            
 for i in range(counter):
     x_total = 0
     y_total = 0
     total = 0
-    #count the number of correct and incorrect frames in each rep
+    
+    #Count the number of correct and incorrect frames in each rep
     for list in rep_list[i]:
-        if str(list) == "correct":
+        if str(list) == "Correct":
             x_total += 1
         elif str(list) == "Incorrect":
             y_total += 1
@@ -238,10 +209,6 @@ for i in range(counter):
     else:
         feedback = "Incorrect"
         incorrect_num+=1
-    
-    print("The Rep No ", i + 1, " was ", feedback)
-    print("Percentage of the correct average of the Rep:" ,avg)
-
 
 with open('./result/workout_details.txt', 'w') as f:
     # Write total number of reps, correct reps, and incorrect reps
@@ -251,7 +218,7 @@ with open('./result/workout_details.txt', 'w') as f:
     for rep in reps:
         f.write(f"{rep}\n")
 
-sample_video.release()
+uploaded_video.release()
 out.release()
 cv2.destroyAllWindows()
 

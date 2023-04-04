@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:getwidget/getwidget.dart';
-import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
 
 import 'CameraPage.dart';
 import 'HomePage.dart';
 import 'SummaryPage.dart';
 
-
 class VideoPlayerScreen extends StatefulWidget {
-final String videoUrl;
+  final String videoUrl;
 
-const VideoPlayerScreen({required this.videoUrl});
+  const VideoPlayerScreen({super.key, required this.videoUrl});
 
-@override
-_VideoPlayerScreenState createState() => _VideoPlayerScreenState();
+  @override
+  State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
 }
 
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
@@ -50,18 +45,11 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     }
   }
 
-
   late VideoPlayerController _controller;
 
   @override
   void initState() {
     super.initState();
-    // _controller = VideoPlayerController.network(
-    //   widget.videoUrl,
-    //   httpHeaders: {'range': 'bytes=0-50000000'},
-    // )..initialize().then((_) {
-    //   setState(() {});
-    // });
     _controller = VideoPlayerController.network(widget.videoUrl)
       ..initialize().then((_) {
         setState(() {});
@@ -78,16 +66,16 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Video Player'),
+        title: const Text('Video Player'),
       ),
       body: _controller.value.isInitialized
           ? AspectRatio(
-        aspectRatio: _controller.value.aspectRatio,
-        child: VideoPlayer(_controller),
-      )
-          : Center(
-        child: CircularProgressIndicator(),
-      ),
+              aspectRatio: _controller.value.aspectRatio,
+              child: VideoPlayer(_controller),
+            )
+          : const Center(
+              child: CircularProgressIndicator(),
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
@@ -100,6 +88,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
         ),
       ),
+
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
         items: const <BottomNavigationBarItem>[
@@ -113,7 +102,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.menu),
-            label: 'Summary',
+            label: 'Info',
           ),
         ],
         currentIndex: _selectedIndex,
@@ -124,4 +113,3 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     );
   }
 }
-

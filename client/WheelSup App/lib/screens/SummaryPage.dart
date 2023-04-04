@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
-import 'package:video_player/video_player.dart';
 import 'dart:convert';
 import 'CameraPage.dart';
 import 'HomePage.dart';
@@ -18,7 +16,7 @@ class SummaryPage extends StatefulWidget {
 
 class _SummaryPageState extends State<SummaryPage> {
   Future getUserData() async {
-    var response = await http.get(Uri.parse('http://127.0.0.1:5000/'));
+    var response = await http.get(Uri.parse('http://127.0.0.1:5000/results'));
 
     Map<String, dynamic> jsonMap = json.decode(response.body);
     Exercise exercise = Exercise.fromJson(jsonMap);
@@ -27,6 +25,7 @@ class _SummaryPageState extends State<SummaryPage> {
 
   int _selectedIndex = 2;
   Set<Widget> progressBars = {};
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -68,197 +67,174 @@ class _SummaryPageState extends State<SummaryPage> {
                 Exercise workoutDetails = snapshot.data!;
                 int correctReps = workoutDetails.correctReps;
                 int totalReps = workoutDetails.totalReps;
-                String videoUrl = workoutDetails.video;
                 Map<String, double> repDetails = workoutDetails.repDetails;
-                  return Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const SizedBox(height: 160),
-                          Text(
-                            "WHEEL",
-                            style: TextStyle(
-                                fontSize: 45,
-                                color: HexColor('#0D6B9F'),
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "ConcertOne"),
-                          ),
-                          Text(
-                            "SUP",
-                            style: TextStyle(
-                                fontSize: 45,
-                                color: HexColor('#28AEFA'),
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "ConcertOne"),
-                          ),
-                          Image.asset(
-                            "assets/images/wheelChair.png",
-                            height: 95,
-                            width: 70,
-                          ),
-                        ],
-                      ),
+                return Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 160),
+                        Text(
+                          "WHEEL",
+                          style: TextStyle(
+                              fontSize: 45,
+                              color: HexColor('#0D6B9F'),
+                              fontWeight: FontWeight.w700,
+                              fontFamily: "ConcertOne"),
+                        ),
+                        Text(
+                          "SUP",
+                          style: TextStyle(
+                              fontSize: 45,
+                              color: HexColor('#28AEFA'),
+                              fontWeight: FontWeight.w700,
+                              fontFamily: "ConcertOne"),
+                        ),
+                        Image.asset(
+                          "assets/images/wheelChair.png",
+                          height: 95,
+                          width: 70,
+                        ),
+                      ],
+                    ),
 
-                      const SizedBox(height: 20),
-                      const Text(
-                        'Workout Summary',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: "Poppins"),
-                      ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      'Workout Summary',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: "Poppins"),
+                    ),
 
-                      const SizedBox(height: 30),
-                      const Text(
-                        'Shoulder Press',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            fontSize: 24,
-                            color: Colors.blue,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: "Poppins"),
-                      ),
+                    const SizedBox(height: 30),
+                    const Text(
+                      'Shoulder Press',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          fontSize: 24,
+                          color: Colors.blue,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: "Poppins"),
+                    ),
 
-                      const SizedBox(height: 30),
+                    const SizedBox(height: 30),
 
-                      const Text(
-                        'Correction Levels of the Workout',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: "Poppins"),
-                      ),
+                    const Text(
+                      'Correction Levels of the Workout',
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: "Poppins"),
+                    ),
 
-                      Column(
-                        children: [
+                    Column(
+                      children: [
+                        Column(
+                          children: repDetails.keys
+                              .map((i) => Column(
+                                    children: [
+                                      const SizedBox(height: 30),
+                                      Text(
+                                        'Rep - ${int.parse(i) + 1}',
+                                        style: const TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.black,
+                                            fontFamily: "Poppins"),
+                                      ),
+                                      GFProgressBar(
+                                        percentage: repDetails[i]! / 100,
+                                        width: 200,
+                                        radius: 100,
+                                        lineHeight: 50,
+                                        alignment: MainAxisAlignment.center,
+                                        backgroundColor: Colors.black38,
+                                        progressBarColor: Colors.green,
+                                      ),
+                                      Text(
+                                        'Correct Percentage - ${repDetails[i]}',
+                                        style: const TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.black,
+                                            fontFamily: "Poppins"),
+                                      ),
+                                    ],
+                                  ))
+                              .toList(),
+                        )
+                      ],
+                    ),
 
-                      Column(
-                        children: repDetails.keys.map((i) => Column(
-                        children: [
-                          const SizedBox(height: 30),
-                          Text(
-                            'Rep - ${int.parse(i)+1}',
-                            style: const TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                            fontFamily: "Poppins"
-                            ),
-                          ),
+                    const SizedBox(height: 30),
 
-                          GFProgressBar(
-                            percentage: repDetails[i]!/100,
-                            width: 200,
-                            radius: 100,
-                            lineHeight: 50,
-                            alignment: MainAxisAlignment.center,
-                            backgroundColor: Colors.black38,
-                            progressBarColor: Colors.green,
-                          ),
+                    const Text(
+                      'FEEDBACK OF YOUR EXERCISE',
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: "Poppins"),
+                    ),
 
-                          Text(
-                            'Correct Percentage - ${repDetails[i]}',
-                            style: const TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                            fontFamily: "Poppins"
-                            ),
-                            ),
-                          ],
-                        )).toList(),
-                      )
+                    const SizedBox(height: 10),
 
-                              ],
-                            ),
+                    Text(
+                      'Total Completed Reps - $totalReps',
+                      style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w200,
+                          fontFamily: "Poppins"),
+                    ),
 
-                            const SizedBox(height: 30),
+                    const SizedBox(height: 10),
 
-                            const Text(
-                              'FEEDBACK OF YOUR EXERCISE',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: "Poppins"),
-                            ),
+                    Text(
+                      'Total Correct Reps - $correctReps',
+                      style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w200,
+                          fontFamily: "Poppins"),
+                    ),
 
-                            const SizedBox(height: 10),
+                    const SizedBox(height: 10),
 
-
-
-                            Text(
-                              'Total Completed Reps - $totalReps',
-                              style: const TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w200,
-                                  fontFamily: "Poppins"),
-                            ),
-
-                            const SizedBox(height: 10),
-
-                            Text(
-                              'Total Correct Reps - $correctReps',
-                              style: const TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w200,
-                                  fontFamily: "Poppins"),
-                            ),
-
-                            const SizedBox(height: 10),
-
-
-
-                            // ElevatedButton(
-                            //   onPressed: () async {
-                            //     var url = videoUrl;
-                            //     if (await canLaunchUrl(url as Uri)) {
-                            //       await launchUrl(url as Uri);
-                            //     } else {
-                            //       throw 'Could not launch $url';
-                            //     }
-                            //   },
-                            //   style: ElevatedButton.styleFrom(
-                            //     foregroundColor: Colors.white, backgroundColor: Colors.blue, // text color
-                            //     padding: const EdgeInsets.symmetric(
-                            //         horizontal: 16, vertical: 8), // button padding
-                            //   ),
-                            //   child: const Text('Watch Video'),
-                            // ),
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => const VideoPlayerScreen(videoUrl: 'http://localhost:5000/video')),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                foregroundColor: Colors.white, backgroundColor: Colors.blue, // text color
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 8), // button padding
-                              ),
-                              child: const Text('Watch Video'),
-                            ),
-
-                      const SizedBox(height: 16),
-                    ],
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const VideoPlayerScreen(
+                                  videoUrl: 'http://localhost:5000/processed')),
                         );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.blue,
+                        // text color
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8), // button padding
+                      ),
+                      child: const Text('Watch Video'),
+                    ),
 
+                    const SizedBox(height: 16),
+                  ],
+                );
               } else if (snapshot.hasError) {
-                  return Text('Error retrieving workout details: ${snapshot.error}');
+                return Text(
+                    'Error retrieving workout details: ${snapshot.error}');
               } else {
-                  return const CircularProgressIndicator();
+                return const CircularProgressIndicator();
               }
             },
           ),
         ),
       ),
-
-
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
         items: const <BottomNavigationBarItem>[
@@ -284,14 +260,15 @@ class _SummaryPageState extends State<SummaryPage> {
   }
 }
 
-class Workout{
+class Workout {
   final String videoUrl;
   final int incorrectReps, totalReps, correctReps;
   Map<String, double> repDetails = {};
 
-  Workout(this.videoUrl, this.incorrectReps, this.totalReps, this.correctReps, this.repDetails);
-
+  Workout(this.videoUrl, this.incorrectReps, this.totalReps, this.correctReps,
+      this.repDetails);
 }
+
 class Exercise {
   int correctReps;
   int incorrectReps;
@@ -304,9 +281,7 @@ class Exercise {
     required this.incorrectReps,
     required this.totalReps,
     required this.correctReps,
-
     required this.repDetails,
-
   });
 
   factory Exercise.fromJson(Map<String, dynamic> json) {
@@ -329,4 +304,3 @@ class Exercise {
     return data;
   }
 }
-

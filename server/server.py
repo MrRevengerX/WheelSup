@@ -1,48 +1,31 @@
 import subprocess
-import cv2
-from flask import Flask, make_response, request, jsonify,send_file
+from flask import Flask, request, jsonify,send_file
 import os
 from flask_cors import CORS
-import numpy as np
-import ffmpeg
 
 app = Flask(__name__)
 CORS(app)
-
-#cors = CORS(app, origins=["http://localhost:*"])
 
 @app.route('/shoulder_press', methods=['POST'])
 def upload_video():
     video_file = request.files['video']
     video_bytes = video_file.read()
-    video_np = np.frombuffer(video_bytes, dtype=np.uint8)
-    video = cv2.imdecode(video_np, cv2.IMREAD_UNCHANGED)
 
-    # os.chdir(os.path.join(os.getcwd(), ".."))
-
-    # file_path = os.path.join(os.getcwd(), 'client', 'WheelSup App', 'assets', 'uploads', 'shoulder_press.mp4')
     file_path = 'uploads/shoulder_press.mp4'
 
-    # Save the decoded video stream to a file
+    #Save the decoded video stream to a file
     with open(file_path, 'wb') as f:
         f.write(video_bytes)
 
-    # os.chdir(os.path.join(os.getcwd(), "server"))
-
-    # Pass the video file name to the second Python script as a command-line argument
+    #Run the shoulder_press.py as a sub process
     subprocess.run(['python', 'shoulder_press.py'])
 
-    return 'Success'
+    return 'Success', 200
 
-@app.route('/video')
-def serve_video():
-    input_file = 'processed/output_shoulder_press.mp4'
+@app.route('/processed')
+def send_video():
+    input_file = 'result/output_shoulder_press.mp4'
     return send_file(input_file, mimetype='video/mp4', as_attachment=False, conditional=False)
-
-    # headers = {'Content-Range': 'bytes 0-50000000/{}'.format(os.path.getsize(video_file))}
-    # response = make_response(send_file(video_file, mimetype='video/mp4', as_attachment=False, conditional=True, last_modified=os.stat(video_file).st_mtime))
-    # response.headers.extend(headers)
-    # return response
 
 @app.route('/upload', methods=['POST'])
 def upload_test():
@@ -59,21 +42,14 @@ def upload_test():
         # do any further processing with the file here
         return 'File uploaded successfully', 200
 
-
-@app.route('/video/processed/<filename>')
-def processed_video(filename):
-    # Return the processed video file
-    return send_file('result/', filename)
-
-
-@app.route('/', methods=['GET'])
+@app.route('/results', methods=['GET'])
 def get_request_test():
     #Read the contents of result details file
     with open('result/workout_details.txt', 'r') as f:
         details = f.readlines()
 
     workout_details = {
-        'video': f'http://localhost:5000/video/processed/shoulder_press.mp4',
+        'video': f'http://localhost:5000/processed',
         'total_reps': int(details[0]),
         'correct_reps': int(details[1]),
         'incorrect_reps': int(details[2]),
@@ -103,7 +79,6 @@ def delete_files():
         os.remove(os.path.join('result', file))
 
     return 'Files deleted successfully', 200
-
 
 if __name__ == '__main__':
     app.run(debug=True)
