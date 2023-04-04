@@ -1,4 +1,4 @@
-
+import numpy as np
 
 
 #Function for calculate the angle inside the elbow
@@ -18,7 +18,6 @@ def calculate_pose_angle(start_point, mid_point, end_point):
 if __name__ == '__main__':
     import mediapipe as mp
     import cv2
-    import numpy as np
     import pandas as pd
     import pickle
     import ctypes
