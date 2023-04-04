@@ -6,19 +6,19 @@ from shoulder_press import calculate_pose_angle
 
 
 def test_load_model():
-    with open('./server/shoulder_press.pkl', 'rb') as f:
+    with open('shoulder_press.pkl', 'rb') as f:
         model = pickle.load(f)
     assert model is not None
 
 # If result folder has files other than pattern.txt file, fail the test
 def test_upload_file():
-    assert len(os.listdir('./server/result')) == 1
-    assert os.path.isfile('./server/result/pattern.txt')
+    assert len(os.listdir('result')) == 1
+    assert os.path.isfile('result/pattern.txt')
 
 # If the uploads folder has files other than upload_folder.txt file, fail the test
 def test_result_file():
-    assert len(os.listdir('./server/uploads')) == 1
-    assert os.path.isfile('./server/uploads/upload_folder.txt')
+    assert len(os.listdir('uploads')) == 1
+    assert os.path.isfile('uploads/upload_folder.txt')
 
 
 # Unit test for calculate_pose_angle function
