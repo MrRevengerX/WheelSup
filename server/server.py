@@ -27,20 +27,6 @@ def send_video():
     input_file = 'result/output_shoulder_press.mp4'
     return send_file(input_file, mimetype='video/mp4', as_attachment=False, conditional=False)
 
-@app.route('/upload', methods=['POST'])
-def upload_test():
-    if 'file' not in request.files:
-        return 'No file uploaded', 400
-
-    file = request.files['file']
-    if file.filename == '':
-        return 'No file selected', 400
-
-    if file:
-        filename = file.filename
-        file.save(filename)
-        # do any further processing with the file here
-        return 'File uploaded successfully', 200
 
 @app.route('/results', methods=['GET'])
 def get_request_test():
