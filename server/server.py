@@ -85,5 +85,20 @@ def get_request_test():
 
     return response
 
+
+#api end point for deleting all files in uploads folder & result folder
+@app.route('/cleanup', methods=['DELETE'])
+def delete_files():
+    #Delete all files in uploads folder
+    for file in os.listdir('uploads'):
+        os.remove(os.path.join('uploads', file))
+
+    #Delete all files in result folder
+    for file in os.listdir('result'):
+        os.remove(os.path.join('result', file))
+
+    return 'Files deleted successfully', 200
+
+
 if __name__ == '__main__':
     app.run(debug=True)
