@@ -179,7 +179,7 @@ with holistic_model.Holistic(min_detection_confidence=0.5, min_tracking_confiden
 
         
         #Display the frames    
-        cv2.imshow('Results Feed', bgr_frame)
+        # cv2.imshow('Results Feed', bgr_frame)
 
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
