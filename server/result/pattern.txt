@@ -1,5 +1,0 @@
-Total number of workout
-Number of correct reps
-Number of incorrect reps
-Rep number
-Correct Percentage

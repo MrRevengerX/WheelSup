@@ -1,34 +1,23 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-#Import all the nessacary libraries to run the pose estimator
-
-#Import mediapipe to be used for the model
 import mediapipe as mp
-#Import opencv for rendaring and drawing capabilities
 import cv2
+import numpy as np
+import pandas as pd
+import pickle
 
-import numpy as np #Handle numpy arrays
-import pandas as pd #Handle tabular data
-import pickle #Save and oad ML model
 
 
-#Import the model from the binary file
+#Import trained data model
 with open('shoulder_press.pkl', 'rb') as f:
     model = pickle.load(f)
     print("Model Loaded")
 
-#Display the results of the prediction done by the model
-draw_helpers = mp.solutions.drawing_utils 
-holistic_model = mp.solutions.holistic
-
-#Calculate angle between 3 landmark points
+#Function for calculate the angle inside the elbow
 def calculate_pose_angle(start_point, mid_point, end_point):    
     max_angle = 180.0
     
-    #[0] = x, [1] = y, [2] = z
+    #Values => [0] = x, [1] = y, [2] = z
     radians = np.arctan2(end_point[1] - mid_point[1], end_point[0] - mid_point[0]) - np.arctan2(start_point[1] - mid_point[1], start_point[0] - mid_point[0])
-    #Convert to an angle
+    #Convert radians to an angle
     angle = np.abs(radians * max_angle / np.pi)
     
     if angle > max_angle:
@@ -36,7 +25,7 @@ def calculate_pose_angle(start_point, mid_point, end_point):
         
     return angle 
 
-#Display the results of the prediction done by the model
+#Creating mediapipe drawing helpers
 draw_helpers = mp.solutions.drawing_utils 
 holistic_model = mp.solutions.holistic
 
@@ -44,19 +33,22 @@ holistic_model = mp.solutions.holistic
 file_path = 'uploads/shoulder_press.mp4'
 uploaded_video = cv2.VideoCapture(file_path)
 
-#Get the video's frames per second 
+#Get the FPS of the uploaded video
 fps = uploaded_video.get(cv2.CAP_PROP_FPS)
 
 #Define the output video file name
 output_file = 'result/output_shoulder_press.mp4'
 
-# Define the frame size
+#Get dimentions of the uploaded video
 frame_size = (int(uploaded_video.get(3)), int(uploaded_video.get(4)))
+
+
 
 # Define the codec and create a VideoWriter object
 fourcc = cv2.VideoWriter_fourcc(*'avc1')
 out = cv2.VideoWriter(output_file, fourcc, fps, frame_size)   
 
+#Initialize variables
 down = None
 counter = 0
 rep_list = []
@@ -68,10 +60,11 @@ with holistic_model.Holistic(min_detection_confidence=0.5, min_tracking_confiden
     
     #Loop through each frame of the video 
     while uploaded_video.isOpened():
+
         #Returns the status of the read and the frame as an image
         ret, frame = uploaded_video.read()
         
-        #If frame is read correctly, status is true
+        #If something wriing with the frame, break the loop
         if ret == False:
             print("Done")
             break
@@ -105,9 +98,10 @@ with holistic_model.Holistic(min_detection_confidence=0.5, min_tracking_confiden
             #Pass the numpy array into a data frame
             features = pd.DataFrame([pose_landmarks_nparray])
             
-            #Store the top class of the prediction
+            #Store the top class of the prediction (Correct or Incorrect)
             pose_class_status = model.predict(features.values)[0]
-            #Store the probability of the prediction
+
+            #Store the probability of the prediction (0.0 - 1.0)
             pose_class_status_prob = model.predict_proba(features.values)[0]              
             
             #Dictionary to store the coords in pixels of the landmarks
@@ -182,11 +176,18 @@ with holistic_model.Holistic(min_detection_confidence=0.5, min_tracking_confiden
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
 
+# --------- End of the main loop ---------
+
+# Release the video capture and video write objects
+uploaded_video.release()
+out.release()
+cv2.destroyAllWindows()
+
+#Declaring vairables to store the number of reps and the percentage of correct frames in each rep
 reps = []
 correct_num = 0
 incorrect_num = 0
-
-#Display the overall result of the exercise            
+   
 for i in range(counter):
     x_total = 0
     y_total = 0
@@ -194,9 +195,9 @@ for i in range(counter):
     
     #Count the number of correct and incorrect frames in each rep
     for list in rep_list[i]:
-        if str(list) == "Correct":
+        if list == "correct":
             x_total += 1
-        elif str(list) == "Incorrect":
+        elif list == "Incorrect":
             y_total += 1
 
         total += 1
@@ -220,10 +221,6 @@ with open('./result/workout_details.txt', 'w') as f:
     # Write the percentage of correct reps for each rep
     for rep in reps:
         f.write(f"{rep}\n")
-
-uploaded_video.release()
-out.release()
-cv2.destroyAllWindows()
 
 
 
