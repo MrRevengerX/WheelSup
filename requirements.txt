@@ -1,3 +1,4 @@
 pytest
 pickleshare
 scikit-learn
+numpy
