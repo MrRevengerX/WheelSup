@@ -141,34 +141,37 @@ with holistic_model.Holistic(min_detection_confidence=0.5, min_tracking_confiden
                 rep_list.append(frame_list)
                 frame_list = []
             
-            #Set a rectangle box to display the results of the prediction in the video frame
-            #rectangle(container, top_coord, bottom_coord, color, line_thickness)
-            cv2.rectangle(bgr_frame, (0,0), (600, 60), (245, 117, 16), -1)
-            
-            #Display the class label inside the rectangle box
-            cv2.putText(bgr_frame, 'Class'
-                        , (10,12), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA)
-            
-            #Extract =and display the top class of the prediction
-            cv2.putText(bgr_frame, pose_class_status.split(' ')[0]
-                        , (10,40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
-            
-            #Display the class probability inside the rectangle box
-            cv2.putText(bgr_frame, 'Probability'
-                        , (250,12), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA)
-            
-            #Extract and dispthe maximum probability
-            cv2.putText(bgr_frame, str(round(pose_class_status_prob[np.argmax(pose_class_status_prob)],2))
-                        , (250,40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
-            
-            #Display the class probability inside the rectangle box
-            cv2.putText(bgr_frame, 'Counter'
-                        , (450,12), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA)
-            
-            #Extract and dispthe maximum probability
-            cv2.putText(bgr_frame, str(counter)
-                        , (450,40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
- 
+            # Get the dimensions of the frame
+            height, width, channels = bgr_frame.shape
+
+            # Calculate the coordinates of the top-left and bottom-right corners of the rectangle
+            x1 = int((width - 1000) / 2)
+            y1 = 20
+            x2 = x1 + 1000
+            y2 = y1 + 80
+
+            # Set a rectangle box to display the results of the prediction in the video frame
+            # rectangle(container, top_coord, bottom_coord, color, line_thickness)
+            cv2.rectangle(bgr_frame, (x1, y1), (x2, y2), (245, 117, 16), -1)
+
+            # Display the class label inside the rectangle box
+            cv2.putText(bgr_frame, 'Class', (x1+10, y1+25), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1, cv2.LINE_AA)
+
+            # Extract and display the top class of the prediction
+            cv2.putText(bgr_frame, pose_class_status.split(' ')[0], (x1+10, y1+55), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+
+            # Display the class probability inside the rectangle box
+            cv2.putText(bgr_frame, 'Probability', (x1+450, y1+25), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1, cv2.LINE_AA)
+
+            # Extract and display the maximum probability
+            cv2.putText(bgr_frame, str(round(pose_class_status_prob[np.argmax(pose_class_status_prob)],2)), (x1+450, y1+55), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+
+            # Display the class probability inside the rectangle box
+            cv2.putText(bgr_frame, 'Counter', (x1+890, y1+25), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1, cv2.LINE_AA)
+
+            # Extract and display the maximum probability
+            cv2.putText(bgr_frame, str(counter), (x1+890, y1+55), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+
         except:
             pass
 
