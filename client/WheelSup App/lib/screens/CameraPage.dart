@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'HomePage.dart';
+import 'InfoPage.dart';
 import 'SummaryPage.dart';
 
 class MyCameraPage extends StatefulWidget {
@@ -34,7 +35,7 @@ class _MyCameraPageState extends State<MyCameraPage> {
       case 2:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const SummaryPage()),
+          MaterialPageRoute(builder: (context) => const InfoPage()),
         );
         break;
     }

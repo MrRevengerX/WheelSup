@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'CameraPage.dart';
 import 'HomePage.dart';
+import 'InfoPage.dart';
 import 'VideoPlayer.dart';
 
 class SummaryPage extends StatefulWidget {
@@ -23,7 +24,7 @@ class _SummaryPageState extends State<SummaryPage> {
     return exercise;
   }
 
-  int _selectedIndex = 2;
+  int _selectedIndex = 0;
   Set<Widget> progressBars = {};
 
   void _onItemTapped(int index) {
@@ -47,7 +48,7 @@ class _SummaryPageState extends State<SummaryPage> {
       case 2:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const SummaryPage()),
+          MaterialPageRoute(builder: (context) => const InfoPage()),
         );
         break;
     }
@@ -251,7 +252,6 @@ class _SummaryPageState extends State<SummaryPage> {
             label: 'Info',
           ),
         ],
-        currentIndex: _selectedIndex,
         selectedItemColor: Colors.blue[800],
         unselectedItemColor: Colors.black,
         onTap: _onItemTapped,

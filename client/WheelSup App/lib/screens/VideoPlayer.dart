@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:summary_page/screens/InfoPage.dart';
 import 'package:video_player/video_player.dart';
 
 import 'CameraPage.dart';
 import 'HomePage.dart';
-import 'SummaryPage.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   final String videoUrl;
@@ -15,7 +15,7 @@ class VideoPlayerScreen extends StatefulWidget {
 }
 
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
-  int _selectedIndex = 2;
+  int _selectedIndex = 0;
   Set<Widget> progressBars = {};
 
   void _onItemTapped(int index) {
@@ -39,7 +39,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       case 2:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const SummaryPage()),
+          MaterialPageRoute(builder: (context) => const InfoPage()),
         );
         break;
     }
@@ -105,7 +105,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
             label: 'Info',
           ),
         ],
-        currentIndex: _selectedIndex,
         selectedItemColor: Colors.blue[800],
         unselectedItemColor: Colors.black,
         onTap: _onItemTapped,

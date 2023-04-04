@@ -3,6 +3,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:summary_page/screens/InfoPage.dart';
 import 'package:summary_page/screens/SummaryPage.dart';
 
 import 'CameraPage.dart';
@@ -17,7 +18,7 @@ class MyExercisePage extends StatefulWidget {
 
 class _MyExercisePage extends State<MyExercisePage> {
   File? file;
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -40,7 +41,7 @@ class _MyExercisePage extends State<MyExercisePage> {
       case 2:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const SummaryPage()),
+          MaterialPageRoute(builder: (context) => const InfoPage()),
         );
         break;
     }
@@ -270,7 +271,6 @@ class _MyExercisePage extends State<MyExercisePage> {
             label: 'Info',
           ),
         ],
-        currentIndex: _selectedIndex,
         selectedItemColor: Colors.blue[800],
         unselectedItemColor: Colors.black,
         onTap: _onItemTapped,
