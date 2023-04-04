@@ -1,9 +1,13 @@
 /client/.idea
-/server/.ipynb_checkpoints
 .ipynb_checkpoints
 .idea/
 *.iml
 *.mp4
 *.MOV
+
+/server/__pycache__
+/server/.pytest_cache
+/server/.ipynb_checkpoints
+
 
 !server/assets/user_upload.mp4
