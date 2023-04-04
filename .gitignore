@@ -1,1 +1,11 @@
+/client/.idea
+.ipynb_checkpoints
+.idea/
+*.iml
 *.mp4
+*.MOV
+
+/server/__pycache__
+/server/.pytest_cache
+/server/.ipynb_checkpoints
+.pytest_cache
