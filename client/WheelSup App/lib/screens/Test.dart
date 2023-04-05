@@ -1,14 +1,14 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
-class Camera extends StatefulWidget {
-  const Camera({Key? key}) : super(key: key);
+class CameraTest extends StatefulWidget {
+  const CameraTest({Key? key}) : super(key: key);
 
   @override
-  _CameraState createState() => _CameraState();
+  _CameraTestState createState() => _CameraTestState();
 }
 
-class _CameraState extends State<Camera> {
+class _CameraTestState extends State<CameraTest> {
   late Future<void> _initControllerFuture;
   late CameraController _controller;
   late XFile _videoFile;
@@ -16,13 +16,18 @@ class _CameraState extends State<Camera> {
   @override
   void initState() {
     super.initState();
+    _initializeCamera();
+  }
+
+  Future<void> _initializeCamera() async {
+    final cameras = await availableCameras();
+    if (cameras.isEmpty) {
+      print('No camera available');
+      return;
+    }
+    final camera = cameras[0];
     _controller = CameraController(
-      CameraDescription(
-        name: '',
-        lensDirection: CameraLensDirection.back,
-        sensorOrientation: 0,
-        resolutionPreset: ResolutionPreset.high,
-      ),
+      camera,
       ResolutionPreset.high,
     );
     _initControllerFuture = _controller.initialize();
@@ -42,7 +47,7 @@ class _CameraState extends State<Camera> {
     final filePath = '${DateTime.now().millisecondsSinceEpoch}.mp4';
 
     try {
-      await _controller.startVideoRecording(filePath);
+      await _controller.startVideoRecording();
     } on CameraException catch (e) {
       print(e);
       return;
@@ -112,4 +117,5 @@ class _CameraState extends State<Camera> {
       ),
     );
   }
+
 }

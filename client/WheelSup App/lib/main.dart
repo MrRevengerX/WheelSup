@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:summary_page/screens/Camera.dart';
+import 'package:summary_page/screens/Test.dart';
 import 'screens/WelcomePage.dart';
 
 void main() => runApp(
