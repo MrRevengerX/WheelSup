@@ -6,6 +6,10 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+@app.route('/', methods=['GET'])
+def index():
+    return 'Hello World!', 200
+
 @app.route('/shoulder_press', methods=['POST'])
 def upload_video():
     video_file = request.files['video']
@@ -35,7 +39,7 @@ def get_request_test():
         details = f.readlines()
 
     workout_details = {
-        'video': f'http://localhost:5000/processed',
+        'video': f'Available',
         'total_reps': int(details[0]),
         'correct_reps': int(details[1]),
         'incorrect_reps': int(details[2]),
@@ -56,15 +60,17 @@ def get_request_test():
 #api end point for deleting all files in uploads folder & result folder
 @app.route('/cleanup', methods=['DELETE'])
 def delete_files():
-    #Delete all files in uploads folder
+    #Delete all files in uploads folder excluding upload_folder.txt
     for file in os.listdir('uploads'):
-        os.remove(os.path.join('uploads', file))
+        if file != 'upload_folder.txt':
+            os.remove(os.path.join('uploads', file))
 
-    #Delete all files in result folder
+    #Delete all files in result folder excluding pattern.txt
     for file in os.listdir('result'):
-        os.remove(os.path.join('result', file))
+        if file != 'pattern.txt':
+            os.remove(os.path.join('result', file))
 
     return 'Files deleted successfully', 200
 
 if __name__ == '__main__':
-    app.run()
+    app.run( port=5000)
