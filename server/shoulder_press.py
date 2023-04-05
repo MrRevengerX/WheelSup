@@ -20,7 +20,6 @@ if __name__ == '__main__':
     import cv2
     import pandas as pd
     import pickle
-    import ctypes
 
     #Import trained data model
     with open('shoulder_press.pkl', 'rb') as f:
@@ -43,9 +42,6 @@ if __name__ == '__main__':
 
     #Get dimentions of the uploaded video
     frame_size = (int(uploaded_video.get(3)), int(uploaded_video.get(4)))
-
-    #Load the openh264 dll file
-    openh264 = ctypes.WinDLL("./openh264-1.8.0-win64.dll")
 
     # Define the codec and create a VideoWriter object
     fourcc = cv2.VideoWriter_fourcc(*'avc1')
