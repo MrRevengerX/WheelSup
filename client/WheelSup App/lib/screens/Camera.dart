@@ -11,7 +11,7 @@ class Camera extends StatefulWidget {
 }
 
 class _CameraState extends State<Camera> {
-  late CameraController controller;
+  CameraController? controller;
   bool _isRecording = false;
 
   @override
@@ -20,7 +20,7 @@ class _CameraState extends State<Camera> {
     availableCameras().then((availableCameras) {
       cameras = availableCameras;
       controller = CameraController(cameras[0], ResolutionPreset.high);
-      controller.initialize().then((_) {
+      controller?.initialize().then((_) {
         if (!mounted) {
           return;
         }
@@ -31,7 +31,7 @@ class _CameraState extends State<Camera> {
 
   @override
   void dispose() {
-    controller.dispose();
+    controller?.dispose();
     super.dispose();
   }
 
@@ -52,7 +52,7 @@ class _CameraState extends State<Camera> {
 
   void startRecording() async {
     try {
-      await controller.startVideoRecording();
+      await controller?.startVideoRecording();
       setState(() {
         _isRecording = true;
       });
@@ -63,7 +63,7 @@ class _CameraState extends State<Camera> {
 
   void stopRecording() async {
     try {
-      await controller.stopVideoRecording();
+      await controller?.stopVideoRecording();
       setState(() {
         _isRecording = false;
       });
@@ -74,14 +74,19 @@ class _CameraState extends State<Camera> {
 
   @override
   Widget build(BuildContext context) {
-    if (!controller.value.isInitialized) {
-      return const Text("Error");
+    if (controller?.value == null) {
+      return Scaffold(
+        backgroundColor: Colors.white,
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+      );
     }
     return Scaffold(
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        child: CameraPreview(controller),
+        child: CameraPreview(controller!),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _onRecordButtonPressed,

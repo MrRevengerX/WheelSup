@@ -189,7 +189,7 @@ class _MyExercisePage extends State<MyExercisePage> {
                             final fileName = result.files.single.name;
 
                             final uri = Uri.parse(
-                                'http://localhost:5000/shoulder_press');
+                                'http://wheelsup.live:5000/shoulder_press');
                             final request = http.MultipartRequest('POST', uri)
                               ..files.add(http.MultipartFile.fromBytes(
                                   'video', fileBytes!,
