@@ -22,7 +22,7 @@ def upload_video():
         f.write(video_bytes)
 
     #Run the shoulder_press.py as a sub process
-    subprocess.run(['python', 'shoulder_press.py'])
+    subprocess.run(['python3', 'shoulder_press.py'])
 
     return 'Success', 200
 
