@@ -44,7 +44,7 @@ if __name__ == '__main__':
     frame_size = (int(uploaded_video.get(3)), int(uploaded_video.get(4)))
 
     # Define the codec and create a VideoWriter object
-    fourcc = cv2.VideoWriter_fourcc(*'avc1')
+    fourcc = cv2.VideoWriter_fourcc(*'X264')
     out = cv2.VideoWriter(output_file, fourcc, fps, frame_size)   
 
     #Initialize variables
