@@ -17,7 +17,7 @@ class SummaryPage extends StatefulWidget {
 
 class _SummaryPageState extends State<SummaryPage> {
   Future getUserData() async {
-    var response = await http.get(Uri.parse('http://127.0.0.1:5000/results'));
+    var response = await http.get(Uri.parse('http://139.59.216.110:5000/results'));
 
     Map<String, dynamic> jsonMap = json.decode(response.body);
     Exercise exercise = Exercise.fromJson(jsonMap);
@@ -210,7 +210,7 @@ class _SummaryPageState extends State<SummaryPage> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => const VideoPlayerScreen(
-                                  videoUrl: 'http://localhost:5000/processed')),
+                                  videoUrl: 'http://139.59.216.110:5000/processed')),
                         );
                       },
                       style: ElevatedButton.styleFrom(

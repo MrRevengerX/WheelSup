@@ -17,7 +17,7 @@ class VideoPlayerScreen extends StatefulWidget {
 
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   void deleteData() async {
-    final response = await http.delete(Uri.parse('http://localhost:5000/cleanup'));
+    final response = await http.delete(Uri.parse('http://139.59.216.110:5000/cleanup'));
     if (response.statusCode != 200) {
       print("Error in Deleting Files");
     }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:summary_page/screens/Camera.dart';
 import 'screens/WelcomePage.dart';
 
 void main() => runApp(
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         // theme: ThemeData(
         //   brightness: Brightness.dark,
         // ),
-        home: MyWelcomePage(),
+        home: Camera(),
     );
   }
 }
