@@ -75,15 +75,18 @@ class _CameraState extends State<Camera> {
   @override
   Widget build(BuildContext context) {
     if (!controller.value.isInitialized) {
-      return Container(
-        child: const Text("Error"),
-      );
+      return const Text("Error");
     }
     return Scaffold(
-      body: CameraPreview(controller),
+      body: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: CameraPreview(controller),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _onRecordButtonPressed,
-        child: _isRecording ? const Icon(Icons.stop) : const Icon(Icons.videocam),
+        child:
+            _isRecording ? const Icon(Icons.stop) : const Icon(Icons.videocam),
       ),
     );
   }
