@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:summary_page/screens/InfoPage.dart';
 import 'package:video_player/video_player.dart';
+import 'package:http/http.dart' as http;
 
 import 'CameraPage.dart';
 import 'HomePage.dart';
@@ -15,12 +16,18 @@ class VideoPlayerScreen extends StatefulWidget {
 }
 
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
-  int _selectedIndex = 0;
+  void deleteData() async {
+    final response = await http.delete(Uri.parse('http://localhost:5000/cleanup'));
+    if (response.statusCode != 200) {
+      print("Error in Deleting Files");
+    }
+  }
+
   Set<Widget> progressBars = {};
 
   void _onItemTapped(int index) {
+    deleteData();
     setState(() {
-      _selectedIndex = index;
     });
 
     switch (index) {
@@ -112,3 +119,4 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     );
   }
 }
+
