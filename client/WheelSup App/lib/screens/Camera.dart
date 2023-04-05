@@ -1,12 +1,10 @@
 import 'package:camera/camera.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 
 List<CameraDescription> cameras = [];
 
 class Camera extends StatefulWidget {
-  const Camera({super.key});
+  const Camera({Key? key}) : super(key: key);
 
   @override
   _CameraState createState() => _CameraState();
@@ -14,13 +12,14 @@ class Camera extends StatefulWidget {
 
 class _CameraState extends State<Camera> {
   late CameraController controller;
+  bool _isRecording = false;
 
   @override
   void initState() {
     super.initState();
     availableCameras().then((availableCameras) {
       cameras = availableCameras;
-      controller = CameraController(cameras[0], ResolutionPreset.medium);
+      controller = CameraController(cameras[0], ResolutionPreset.high);
       controller.initialize().then((_) {
         if (!mounted) {
           return;
@@ -36,16 +35,55 @@ class _CameraState extends State<Camera> {
     super.dispose();
   }
 
+  void _onRecordButtonPressed() {
+    if (_isRecording) {
+      stopRecording();
+      dispose();
+      Navigator.of(context).pop();
+    } else {
+      startRecording();
+    }
+  }
+
+  void _disposeAndGoBack() {
+    dispose();
+    Navigator.of(context).pop();
+  }
+
+  void startRecording() async {
+    try {
+      await controller.startVideoRecording();
+      setState(() {
+        _isRecording = true;
+      });
+    } on CameraException catch (e) {
+      print(e);
+    }
+  }
+
+  void stopRecording() async {
+    try {
+      await controller.stopVideoRecording();
+      setState(() {
+        _isRecording = false;
+      });
+    } on CameraException catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (!controller.value.isInitialized) {
-      return Container();
+      return Container(
+        child: const Text("Error"),
+      );
     }
     return Scaffold(
       body: CameraPreview(controller),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.videocam),
+        onPressed: _onRecordButtonPressed,
+        child: _isRecording ? const Icon(Icons.stop) : const Icon(Icons.videocam),
       ),
     );
   }

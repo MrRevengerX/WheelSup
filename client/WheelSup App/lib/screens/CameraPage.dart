@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'Camera.dart';
+import 'package:summary_page/screens/Camera.dart';
 import 'HomePage.dart';
 import 'InfoPage.dart';
 import 'SummaryPage.dart';
@@ -156,17 +156,26 @@ class _MyCameraPageState extends State<MyCameraPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const Camera()),
+                              builder: (context) => const Camera()
+                          )
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.blue,
-                        // text color
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 8), // button padding
+                        backgroundColor: Color.fromRGBO(40, 174, 250, 1.0),
+                        foregroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
                       ),
-                      child: const Text('Watch Video'),
+                      child: const Text(
+                        "START RECORDING",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontFamily: "Poppins",
+                          fontSize: 16,
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
                     ),
                   ),
                 ]),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
+import 'Camera.dart';
 import 'CameraPage.dart';
 import 'HomePage.dart';
 
@@ -44,6 +45,7 @@ class _InfoPageState extends State<InfoPage> {
         break;
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
