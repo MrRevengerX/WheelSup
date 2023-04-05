@@ -28,8 +28,8 @@ def upload_video():
 
 @app.route('/processed')
 def send_video():
-    input_file = 'result/output_shoulder_press.mp4'
-    return send_file(input_file, mimetype='video/mp4', as_attachment=False, conditional=False)
+    input_file = 'result/output_shoulder_press.avi'
+    return send_file(input_file, mimetype='video/x-msvideo', as_attachment=False, conditional=False)
 
 
 @app.route('/results', methods=['GET'])
