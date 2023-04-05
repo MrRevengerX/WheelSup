@@ -75,7 +75,12 @@ class _CameraState extends State<Camera> {
   @override
   Widget build(BuildContext context) {
     if (controller?.value == null) {
-      return const Text("Error");
+      return Scaffold(
+        backgroundColor: Colors.white,
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+      );
     }
     return Scaffold(
       body: SizedBox(
