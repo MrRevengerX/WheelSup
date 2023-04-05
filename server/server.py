@@ -8,7 +8,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Define SSL context
-context = SSL.Context()
+context = SSL.Context(SSL.PROTOCOL_TLSv1_1)
 context.load_cert_chain('cetfile.pem', 'key.pem')
 
 @app.route('/', methods=['GET'])
