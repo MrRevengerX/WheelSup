@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 160),
+                const SizedBox(height: 130),
                 Text(
                   "WHEEL",
                   style: TextStyle(
@@ -147,7 +147,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 "assets/images/blue1.png",
                 height: 190,
                 fit: BoxFit.cover,
-                color: Colors.transparent,
               ),
 
             ),

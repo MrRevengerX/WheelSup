@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
 import 'screens/WelcomePage.dart';
 
-void main() => runApp(
-  DevicePreview(
-    builder: (context) => const MyApp(), // Wrap your app
-  ),
-);
+void main() => runApp(const MyApp());
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -14,6 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
         locale: DevicePreview.locale(context),
+        debugShowCheckedModeBanner: false,
         builder: DevicePreview.appBuilder,
         title: "WheelsSup",
         // theme: ThemeData(

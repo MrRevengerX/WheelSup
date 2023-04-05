@@ -50,6 +50,8 @@ class _MyCameraPageState extends State<MyCameraPage> {
         color: Colors.blue[50],
         width: double.infinity,
         height: double.infinity,
+        child: Padding(
+          padding: const EdgeInsets.all(10.10),
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           // crossAxisAlignment: CrossAxisAlignment.center,
@@ -58,7 +60,7 @@ class _MyCameraPageState extends State<MyCameraPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 160),
+                const SizedBox(height: 130),
                 Text(
                   "WHEEL",
                   style: TextStyle(
@@ -82,7 +84,7 @@ class _MyCameraPageState extends State<MyCameraPage> {
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 10,),
             const Text(
               'Camera Placement Instructions \n',
               style: TextStyle(
@@ -92,7 +94,7 @@ class _MyCameraPageState extends State<MyCameraPage> {
                   fontFamily: "Poppins"),
             ),
             const Text(
-              ' 1. Camera should be positioned within 2.5-3 m \n which allows you to see your entire body. ',
+              ' 1. Camera should be positioned within 2.5-3 m which allows you to see your entire body. ',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.black,
@@ -100,11 +102,11 @@ class _MyCameraPageState extends State<MyCameraPage> {
               ),
               textAlign: TextAlign.left,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             const Text(
-              '2. Camera should be placed at a direct angle \n facing the user. ',
+              '2. Camera should be placed at a direct angle facing the user. ',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.black,
@@ -112,9 +114,9 @@ class _MyCameraPageState extends State<MyCameraPage> {
               ),
               textAlign: TextAlign.left,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             const Text(
-              ' 3. Background lighting should be bright enough \n to ensure that you are clearly visible in the \n video.',
+              ' 3. Background lighting should be bright enough to ensure that you are clearly visible in the \n video.',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.black,
@@ -122,9 +124,9 @@ class _MyCameraPageState extends State<MyCameraPage> {
               ),
               textAlign: TextAlign.left,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             const Text(
-              ' 4. Place the camera on a stable surface(tripod)\n to ensure that it remains steady throughout the\n recording. ',
+              ' 4. Place the camera on a stable surface(tripod) to ensure that it remains steady throughout the\n recording. ',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.black,
@@ -132,9 +134,9 @@ class _MyCameraPageState extends State<MyCameraPage> {
               ),
               textAlign: TextAlign.left,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             const Text(
-              ' 5. Avoid using the zoom function on the camera, \n As this can cause distortion and make it difficult \n for you to see your movements clearly. ',
+              ' 5. Avoid using the zoom function on the camera, As this can cause distortion and make it difficult \n for you to see your movements clearly. ',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.black,
@@ -182,6 +184,7 @@ class _MyCameraPageState extends State<MyCameraPage> {
               ],
             )
           ],
+        ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(

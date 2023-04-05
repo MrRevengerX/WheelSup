@@ -59,7 +59,7 @@ class _MyExercisePage extends State<MyExercisePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 120),
+                  const SizedBox(height: 100),
                   Text(
                     "WHEEL",
                     style: TextStyle(
@@ -77,9 +77,9 @@ class _MyExercisePage extends State<MyExercisePage> {
                         fontFamily: "ConcertOne"),
                   ),
                   Image.asset(
-                    "images/wheelChair.png",
-                    height: 50,
-                    width: 50,
+                    "assets/images/wheelChair.png",
+                    height: 95,
+                    width: 70,
                   ),
                 ],
               ),
@@ -155,7 +155,7 @@ class _MyExercisePage extends State<MyExercisePage> {
               //
               const SizedBox(height: 0),
               Image.asset(
-                "images/dbShoulderPress.png",
+                "assets/images/dbShoulderPress.png",
                 height: 300,
                 width: 300,
               ),

@@ -50,7 +50,9 @@ class _InfoPageState extends State<InfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: Padding(
+        padding: const EdgeInsets.all(10.10),
+        child: Container(
         // color: Colors.blue[50],
         color: Colors.white,
         width: double.infinity,
@@ -63,7 +65,7 @@ class _InfoPageState extends State<InfoPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 160),
+                const SizedBox(height: 130),
                 Text(
                   "WHEEL",
                   style: TextStyle(
@@ -173,6 +175,7 @@ class _InfoPageState extends State<InfoPage> {
             ),
           ],
         ),
+      ),
       ),
 
       bottomNavigationBar: BottomNavigationBar(
