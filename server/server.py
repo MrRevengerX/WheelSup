@@ -2,14 +2,9 @@ import subprocess
 from flask import Flask, request, jsonify,send_file
 import os
 from flask_cors import CORS
-from OpenSSL import SSL
 
 app = Flask(__name__)
 CORS(app)
-
-# Define SSL context
-context = SSL.Context(SSL.PROTOCOL_TLSv1_1)
-context.load_cert_chain('cetfile.pem', 'key.pem')
 
 @app.route('/', methods=['GET'])
 def index():
@@ -81,4 +76,4 @@ def delete_files():
     return 'Files deleted successfully', 200
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, ssl_context=context)
+    app.run(host='0.0.0.0', port=5000)
