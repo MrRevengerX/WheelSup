@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:summary_page/screens/Camera.dart';
 import 'HomePage.dart';
 import 'InfoPage.dart';
 import 'SummaryPage.dart';
@@ -151,7 +152,14 @@ class _MyCameraPageState extends State<MyCameraPage> {
                     width: 280.0,
                     height: 55.0,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Camera()
+                          )
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color.fromRGBO(40, 174, 250, 1.0),
                         foregroundColor: Colors.black,
