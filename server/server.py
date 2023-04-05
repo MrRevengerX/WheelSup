@@ -34,27 +34,30 @@ def send_video():
 
 @app.route('/results', methods=['GET'])
 def get_request_test():
-    #Read the contents of result details file
-    with open('result/workout_details.txt', 'r') as f:
-        details = f.readlines()
+    #Read the contents of result details file if it exists and return the details if it isnt return a 404
+    if os.path.exists('result/workout_details.txt'):
+        with open('result/workout_details.txt', 'r') as f:
+            details = f.readlines()
 
-    workout_details = {
-        'video': f'Available',
-        'total_reps': int(details[0]),
-        'correct_reps': int(details[1]),
-        'incorrect_reps': int(details[2]),
-        'rep_details': {}
-    }
+        workout_details = {
+            'video': f'Available',
+            'total_reps': int(details[0]),
+            'correct_reps': int(details[1]),
+            'incorrect_reps': int(details[2]),
+            'rep_details': {}
+        }
 
-    for i in range(3, len(details), 2):
-        rep_num = int(details[i])
-        correct_percentage = float(details[i+1])
-        workout_details['rep_details'][str(rep_num)] = correct_percentage
+        for i in range(3, len(details), 2):
+            rep_num = int(details[i])
+            correct_percentage = float(details[i+1])
+            workout_details['rep_details'][str(rep_num)] = correct_percentage
 
-    # # Return a JSON response
-    response = jsonify(workout_details)
+        # # Return a JSON response
+        response = jsonify(workout_details)
 
-    return response
+        return response
+    else:
+        return 'File not found', 404
 
 
 #api end point for deleting all files in uploads folder & result folder
