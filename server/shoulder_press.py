@@ -38,13 +38,13 @@ if __name__ == '__main__':
     fps = uploaded_video.get(cv2.CAP_PROP_FPS)
 
     #Define the output video file name
-    output_file = 'result/output_shoulder_press.avi'
+    output_file = 'result/output_shoulder_press.mp4'
 
     #Get dimentions of the uploaded video
     frame_size = (int(uploaded_video.get(3)), int(uploaded_video.get(4)))
 
     # Define the codec and create a VideoWriter object
-    fourcc = cv2.VideoWriter_fourcc(*'XVID')
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     out = cv2.VideoWriter(output_file, fourcc, fps, frame_size)   
 
     #Initialize variables
